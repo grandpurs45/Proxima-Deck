@@ -17,6 +17,7 @@
             <div class="status-panel" aria-live="polite">
                 <span class="pulse" aria-hidden="true"></span>
                 <span id="networkLabel">Synchronisation</span>
+                <span id="versionLabel" class="version-badge">v...</span>
             </div>
         </header>
 

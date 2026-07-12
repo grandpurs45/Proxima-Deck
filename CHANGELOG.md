@@ -10,6 +10,7 @@ Le projet suit le versioning semantique.
 
 - Socle initial PHP sans dependance externe.
 - Dashboard responsive en une page.
+- Version affichee dans l'interface.
 - API JSON exposant les applications visibles.
 - Lecture d'un fichier `config/applications.yaml`.
 - Detection du contexte reseau par IP privee, variable d'environnement ou en-tete reverse proxy.

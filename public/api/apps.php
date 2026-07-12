@@ -15,9 +15,12 @@ try {
     $repository = new ApplicationRepository($configPath);
     $context = (new NetworkContextDetector())->detect($_SERVER);
     $applications = (new ApplicationPresenter())->visibleApplications($repository->all(), $context);
+    $versionPath = dirname(__DIR__, 2) . '/VERSION';
+    $version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)) : 'dev';
 
     echo json_encode(
         [
+            'version' => $version,
             'network' => $context->toArray(),
             'applications' => $applications,
         ],

@@ -1,6 +1,7 @@
 const state = {
   applications: [],
   network: null,
+  version: 'dev',
   query: '',
   collapsedCategories: new Set(),
 };
@@ -9,6 +10,7 @@ const dashboard = document.querySelector('#dashboard');
 const emptyState = document.querySelector('#emptyState');
 const searchInput = document.querySelector('#searchInput');
 const networkLabel = document.querySelector('#networkLabel');
+const versionLabel = document.querySelector('#versionLabel');
 const appCount = document.querySelector('#appCount');
 
 searchInput.addEventListener('input', (event) => {
@@ -27,6 +29,7 @@ async function boot() {
 
     state.applications = payload.applications;
     state.network = payload.network;
+    state.version = payload.version || 'dev';
     renderNetwork();
     render();
   } catch (error) {
@@ -44,6 +47,7 @@ function renderNetwork() {
   const method = state.network?.method || 'unknown';
 
   networkLabel.textContent = `${scope} · ${method}`;
+  versionLabel.textContent = `v${state.version}`;
 }
 
 function render() {
