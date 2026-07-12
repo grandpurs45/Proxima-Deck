@@ -1,0 +1,12 @@
+services:
+  proximadeck:
+    build: .
+    container_name: proximadeck
+    restart: unless-stopped
+    ports:
+      - "8080:80"
+    environment:
+      PROXIMADECK_CONFIG: /var/www/html/config/applications.yaml
+      # PROXIMADECK_NETWORK_CONTEXT: internal
+    volumes:
+      - ./config/applications.yaml:/var/www/html/config/applications.yaml:ro
