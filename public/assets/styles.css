@@ -85,6 +85,11 @@ h1 {
   white-space: nowrap;
 }
 
+#networkLabel,
+#versionLabel {
+  flex: 0 0 auto;
+}
+
 .pulse {
   width: 10px;
   height: 10px;
@@ -99,6 +104,7 @@ h1 {
   color: var(--cyan);
   font-size: 0.78rem;
   font-weight: 800;
+  white-space: nowrap;
 }
 
 .command-row {

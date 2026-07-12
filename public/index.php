@@ -1,3 +1,7 @@
+<?php
+$versionPath = dirname(__DIR__) . '/VERSION';
+$version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)) : 'dev';
+?>
 <!doctype html>
 <html lang="fr">
 <head>
@@ -17,7 +21,7 @@
             <div class="status-panel" aria-live="polite">
                 <span class="pulse" aria-hidden="true"></span>
                 <span id="networkLabel">Synchronisation</span>
-                <span id="versionLabel" class="version-badge">v...</span>
+                <span id="versionLabel" class="version-badge">v<?= htmlspecialchars($version, ENT_QUOTES, 'UTF-8') ?></span>
             </div>
         </header>
 
