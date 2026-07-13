@@ -59,6 +59,7 @@ Icones fournies dans le socle actuel :
 
 - `default.svg`
 - `proxmox.svg`
+- `umami.svg`
 - `uptime-kuma.svg`
 - `homeassistant.svg`
 - `vaultwarden.svg`

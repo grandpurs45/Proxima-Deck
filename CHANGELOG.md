@@ -4,6 +4,16 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.2.1] - 2026-07-13
+
+### Ajoute
+
+- Icone SVG dediee pour Umami.
+
+### Modifie
+
+- Configuration d'exemple remplacee par les services homelab Umami et Uptime Kuma.
+
 ## [0.2.0] - 2026-07-13
 
 ### Ajoute

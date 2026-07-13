@@ -1,40 +1,20 @@
 applications:
-  - id: proxmox
-    name: Proxmox
-    category: Infrastructure
-    description: Cluster principal
-    visibility: internal
-    internal_url: https://proxmox.lan
-    external_url:
-    icon: proxmox.svg
+  - id: umami
+    name: Umami
+    category: Web
+    description: Analytics web
+    visibility: both
+    internal_url: https://umami.lan/login
+    external_url: https://analytics.oudard-lab.fr/
+    icon: umami.svg
     order: 10
 
   - id: uptime-kuma
     name: Uptime Kuma
     category: Monitoring
     description: Supervision des services
-    visibility: both
-    internal_url: http://uptime.lan:3001
-    external_url: https://status.example.com
+    visibility: internal
+    internal_url: http://192.168.1.164:3045/dashboard
+    external_url:
     icon: uptime-kuma.svg
     order: 20
-
-  - id: homeassistant
-    name: Home Assistant
-    category: Domotique
-    description: Controle de la maison
-    visibility: both
-    internal_url: http://ha.lan:8123
-    external_url: https://ha.example.com
-    icon: homeassistant.svg
-    order: 30
-
-  - id: vaultwarden
-    name: Vaultwarden
-    category: Outils
-    description: Coffre-fort de mots de passe
-    visibility: external
-    internal_url: http://vaultwarden.lan
-    external_url: https://vault.example.com
-    icon: vaultwarden.svg
-    order: 40

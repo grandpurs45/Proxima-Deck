@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Umami">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#07111f" stroke="#67e8f9" stroke-width="2"/>
+  <path d="M18 40C23 28 28 22 34 22C40 22 44 28 46 40" stroke="#67e8f9" stroke-width="4" stroke-linecap="round"/>
+  <path d="M22 40C26 34 30 31 34 31C38 31 41 34 44 40" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+  <circle cx="24" cy="24" r="4" fill="#22c55e"/>
+  <circle cx="44" cy="22" r="3" fill="#38bdf8"/>
+</svg>
