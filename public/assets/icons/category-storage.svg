@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Stockage">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#0f172a" stroke="#a78bfa" stroke-width="2"/>
+  <ellipse cx="32" cy="22" rx="14" ry="6" fill="#a78bfa"/>
+  <path d="M18 22V42C18 45 24 48 32 48C40 48 46 45 46 42V22" stroke="#f8fafc" stroke-width="3"/>
+  <path d="M18 32C18 35 24 38 32 38C40 38 46 35 46 32" stroke="#f8fafc" stroke-width="3"/>
+</svg>

@@ -7,6 +7,7 @@ ProximaDeck est un portail web open source auto-heberge pour homelab. Il sert de
 - Dashboard web responsive en une page.
 - Applications affichees sous forme de cartes.
 - Icones SVG par service avec fallback automatique.
+- Fallback d'icones par service, categorie, puis icone par defaut.
 - Host cible affiche sur chaque carte.
 - Categories repliables.
 - Recherche instantanee.

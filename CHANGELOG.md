@@ -4,6 +4,18 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.3.0] - 2026-07-13
+
+### Ajoute
+
+- Resolution serveur des icones avec fallback par service, categorie, puis icone par defaut.
+- Icones SVG de categories pour Web, Monitoring, Infrastructure, Domotique, Reseau, Stockage, Developpement, Multimedia et Outils.
+- Metadata `icon_source` et `icon_label` exposees par l'API pour diagnostiquer la source de l'icone.
+
+### Securite
+
+- Validation du nom de fichier d'icone pour refuser les chemins ou noms inattendus.
+
 ## [0.2.1] - 2026-07-13
 
 ### Ajoute

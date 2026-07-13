@@ -1,0 +1,5 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Domotique">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#061827" stroke="#38bdf8" stroke-width="2"/>
+  <path d="M18 31L32 19L46 31V47H37V37H27V47H18V31Z" fill="#38bdf8"/>
+  <circle cx="44" cy="21" r="4" fill="#22c55e"/>
+</svg>

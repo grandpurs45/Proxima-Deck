@@ -140,7 +140,7 @@ function renderCard(application) {
 
   card.innerHTML = `
     <div class="card-topline">
-      <span class="icon-frame">
+      <span class="icon-frame" title="${escapeHtml(application.icon_label || 'Icone')}">
         <img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy" onerror="this.src='/assets/icons/default.svg'">
       </span>
       <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>

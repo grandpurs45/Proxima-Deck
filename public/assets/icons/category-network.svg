@@ -1,0 +1,7 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Reseau">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#0b1120" stroke="#67e8f9" stroke-width="2"/>
+  <circle cx="20" cy="24" r="5" fill="#67e8f9"/>
+  <circle cx="44" cy="24" r="5" fill="#38bdf8"/>
+  <circle cx="32" cy="43" r="5" fill="#22c55e"/>
+  <path d="M25 26H39M23 29L29 39M41 29L35 39" stroke="#f8fafc" stroke-width="3" stroke-linecap="round"/>
+</svg>

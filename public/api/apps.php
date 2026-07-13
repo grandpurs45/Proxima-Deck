@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use ProximaDeck\ApplicationPresenter;
 use ProximaDeck\Config\ApplicationRepository;
+use ProximaDeck\IconResolver;
 use ProximaDeck\Network\NetworkContextDetector;
 
 require dirname(__DIR__, 2) . '/src/bootstrap.php';
@@ -14,7 +15,8 @@ try {
     $configPath = env_value('PROXIMADECK_CONFIG', dirname(__DIR__, 2) . '/config/applications.yaml');
     $repository = new ApplicationRepository($configPath);
     $context = (new NetworkContextDetector())->detect($_SERVER);
-    $applications = (new ApplicationPresenter())->visibleApplications($repository->all(), $context);
+    $iconResolver = new IconResolver(dirname(__DIR__) . '/assets/icons');
+    $applications = (new ApplicationPresenter($iconResolver))->visibleApplications($repository->all(), $context);
     $versionPath = dirname(__DIR__, 2) . '/VERSION';
     $version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)) : 'dev';
 

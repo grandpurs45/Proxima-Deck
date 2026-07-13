@@ -8,6 +8,10 @@ use ProximaDeck\Network\NetworkContext;
 
 final class ApplicationPresenter
 {
+    public function __construct(private readonly IconResolver $iconResolver)
+    {
+    }
+
     public function visibleApplications(array $applications, NetworkContext $context): array
     {
         $visible = array_filter($applications, static function (array $application) use ($context): bool {
@@ -19,12 +23,20 @@ final class ApplicationPresenter
         });
 
         return array_values(array_map(
-            static fn (array $application): array => self::withResolvedUrl($application, $context),
+            fn (array $application): array => $this->withPresentationData($application, $context),
             $visible
         ));
     }
 
-    private static function withResolvedUrl(array $application, NetworkContext $context): array
+    private function withPresentationData(array $application, NetworkContext $context): array
+    {
+        return array_merge(
+            $this->withResolvedUrl($application, $context),
+            $this->iconResolver->resolve($application)
+        );
+    }
+
+    private function withResolvedUrl(array $application, NetworkContext $context): array
     {
         $primary = $context->isInternal() ? $application['internal_url'] : $application['external_url'];
         $fallback = $context->isInternal() ? $application['external_url'] : $application['internal_url'];

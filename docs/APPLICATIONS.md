@@ -45,7 +45,7 @@ Si le visiteur est detecte depuis Internet, ProximaDeck utilise `external_url`.
 
 Si l'URL prioritaire est absente mais que l'autre URL existe, ProximaDeck l'utilise comme secours et marque la tuile en `fallback`.
 
-## Icônes
+## Icones
 
 Placez les icones SVG dans `public/assets/icons/`, puis referencez seulement le nom du fichier :
 
@@ -55,9 +55,38 @@ icon: homeassistant.svg
 
 Le fichier `default.svg` sert d'icone par defaut.
 
+ProximaDeck resout les icones dans cet ordre :
+
+1. icone configuree dans `applications.yaml`, si le fichier existe ;
+2. icone connue du service, basee sur `id` ;
+3. icone de categorie, basee sur `category` ;
+4. `default.svg`.
+
+Les noms d'icones doivent etre des fichiers SVG simples, sans chemin :
+
+```yaml
+icon: umami.svg
+```
+
+Exemples refuses :
+
+```yaml
+icon: ../secret.svg
+icon: icon.png
+```
+
 Icones fournies dans le socle actuel :
 
 - `default.svg`
+- `category-development.svg`
+- `category-home.svg`
+- `category-infrastructure.svg`
+- `category-media.svg`
+- `category-monitoring.svg`
+- `category-network.svg`
+- `category-storage.svg`
+- `category-tools.svg`
+- `category-web.svg`
 - `proxmox.svg`
 - `umami.svg`
 - `uptime-kuma.svg`
