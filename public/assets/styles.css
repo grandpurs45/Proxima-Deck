@@ -348,7 +348,8 @@ h1 {
 }
 
 .empty-state,
-.notice {
+.notice,
+.warning-state {
   border: 1px solid var(--line);
   border-radius: 8px;
   padding: 24px;
@@ -356,14 +357,57 @@ h1 {
 }
 
 .empty-state h2,
-.notice h2 {
+.notice h2,
+.warning-state h2 {
   margin: 0 0 8px;
 }
 
 .empty-state p,
-.notice p {
+.notice p,
+.warning-state p {
   margin: 0;
   color: var(--muted);
+}
+
+.notice-error {
+  border-color: rgba(251, 113, 133, 0.5);
+}
+
+.warning-state {
+  margin-bottom: 18px;
+  border-color: rgba(245, 158, 11, 0.45);
+}
+
+.notice ul,
+.warning-state ul {
+  display: grid;
+  gap: 10px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.notice li,
+.warning-state li {
+  border-top: 1px solid rgba(148, 163, 184, 0.16);
+  padding-top: 10px;
+}
+
+.notice li strong,
+.warning-state li strong {
+  color: var(--cyan);
+  font-size: 0.78rem;
+}
+
+.notice li span,
+.warning-state li span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.notice li p,
+.warning-state li p {
+  margin-top: 4px;
 }
 
 @media (max-width: 720px) {

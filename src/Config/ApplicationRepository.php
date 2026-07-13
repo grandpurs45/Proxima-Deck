@@ -14,7 +14,7 @@ final class ApplicationRepository
 
     public function all(): array
     {
-        $applications = $this->parser->parseApplicationsFile($this->configPath);
+        $applications = $this->raw();
 
         $normalized = array_map(
             static fn (array $application): array => self::normalize($application),
@@ -26,6 +26,11 @@ final class ApplicationRepository
         });
 
         return $normalized;
+    }
+
+    public function raw(): array
+    {
+        return $this->parser->parseApplicationsFile($this->configPath);
     }
 
     private static function normalize(array $application): array

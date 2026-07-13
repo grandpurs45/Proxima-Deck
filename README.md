@@ -15,6 +15,7 @@ ProximaDeck est un portail web open source auto-heberge pour homelab. Il sert de
 - Visibilite par application : `internal`, `external`, `both`.
 - Detection reseau extensible : IP privee, variable d'environnement, en-tete reverse proxy.
 - Version affichee dans l'interface depuis le fichier `VERSION`.
+- Validation de configuration avec erreurs lisibles dans l'interface.
 - Dockerfile et `docker-compose.yml` generiques.
 
 ## Structure
@@ -45,6 +46,12 @@ applications:
 ```
 
 Le detail des champs est documente dans `docs/APPLICATIONS.md`.
+
+Validez la configuration en ligne de commande :
+
+```bash
+php tools/validate-config.php
+```
 
 ## Developpement local
 

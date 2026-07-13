@@ -37,6 +37,7 @@ $assetVersion = rawurlencode($version);
             </div>
         </section>
 
+        <section id="warningState" class="warning-state" hidden></section>
         <section id="dashboard" class="dashboard" aria-live="polite"></section>
         <section id="emptyState" class="empty-state" hidden>
             <h2>Aucune application</h2>

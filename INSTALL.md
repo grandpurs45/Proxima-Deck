@@ -16,6 +16,12 @@
 
 Le format complet des tuiles est decrit dans `docs/APPLICATIONS.md`.
 
+Vous pouvez valider la configuration avec :
+
+```bash
+php tools/validate-config.php
+```
+
 ## Installation avec Docker
 
 ```bash

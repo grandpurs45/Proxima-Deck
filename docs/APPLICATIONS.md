@@ -103,3 +103,21 @@ Pour remplacer les exemples par votre vraie configuration, ajoutez une entree pa
 - URL LAN
 - URL externe si elle existe
 - icone souhaitee
+
+## Validation
+
+Validez le fichier YAML avant de publier une modification :
+
+```bash
+php tools/validate-config.php
+```
+
+La validation detecte notamment :
+
+- `id` manquant ou duplique ;
+- `name` manquant ;
+- `visibility` invalide ;
+- URLs invalides ;
+- URL obligatoire manquante selon la visibilite ;
+- nom d'icone invalide ;
+- fichier d'icone introuvable.

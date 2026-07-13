@@ -8,6 +8,7 @@ const state = {
 
 const dashboard = document.querySelector('#dashboard');
 const emptyState = document.querySelector('#emptyState');
+const warningState = document.querySelector('#warningState');
 const searchInput = document.querySelector('#searchInput');
 const networkLabel = document.querySelector('#networkLabel');
 const versionLabel = document.querySelector('#versionLabel');
@@ -24,21 +25,17 @@ async function boot() {
     const payload = await response.json();
 
     if (!response.ok) {
-      throw new Error(payload.message || 'Configuration indisponible');
+      throw payload;
     }
 
     state.applications = payload.applications;
     state.network = payload.network;
     state.version = payload.version || 'dev';
     renderNetwork();
+    renderWarnings(payload.validation?.warnings || []);
     render();
   } catch (error) {
-    dashboard.innerHTML = `
-      <article class="notice">
-        <h2>Configuration indisponible</h2>
-        <p>${escapeHtml(error.message)}</p>
-      </article>
-    `;
+    renderError(error);
   }
 }
 
@@ -71,6 +68,52 @@ function render() {
   for (const [category, applications] of groups) {
     dashboard.appendChild(renderCategory(category, applications));
   }
+}
+
+function renderWarnings(issues) {
+  const warnings = issues.filter((issue) => issue.level === 'warning');
+
+  if (warnings.length === 0) {
+    warningState.hidden = true;
+    warningState.innerHTML = '';
+    return;
+  }
+
+  warningState.hidden = false;
+  warningState.innerHTML = `
+    <h2>Configuration a verifier</h2>
+    <ul>
+      ${warnings.map(renderIssue).join('')}
+    </ul>
+  `;
+}
+
+function renderError(error) {
+  const message = error?.message || 'Configuration indisponible';
+  const issues = Array.isArray(error?.issues) ? error.issues : [];
+
+  emptyState.hidden = true;
+  warningState.hidden = true;
+  dashboard.innerHTML = `
+    <article class="notice notice-error">
+      <h2>Configuration invalide</h2>
+      <p>${escapeHtml(message)}</p>
+      ${issues.length > 0 ? `<ul>${issues.map(renderIssue).join('')}</ul>` : ''}
+    </article>
+  `;
+}
+
+function renderIssue(issue) {
+  const app = issue.application_id ? ` · ${issue.application_id}` : '';
+  const field = issue.field ? ` · ${issue.field}` : '';
+
+  return `
+    <li>
+      <strong>${escapeHtml(issue.code || issue.level || 'issue')}</strong>
+      <span>${escapeHtml(`${app}${field}`)}</span>
+      <p>${escapeHtml(issue.message || '')}</p>
+    </li>
+  `;
 }
 
 function groupByCategory(applications) {

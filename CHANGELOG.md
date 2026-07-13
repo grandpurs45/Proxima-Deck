@@ -4,6 +4,15 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.4.0] - 2026-07-13
+
+### Ajoute
+
+- Validation structuree de `config/applications.yaml`.
+- Affichage des erreurs et avertissements de configuration dans l'interface.
+- Commande CLI `php tools/validate-config.php`.
+- Detection des ids manquants, ids dupliques, visibilites invalides, URLs invalides et icones absentes.
+
 ## [0.3.0] - 2026-07-13
 
 ### Ajoute
