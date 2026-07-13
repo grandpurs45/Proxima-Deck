@@ -46,7 +46,7 @@ function renderNetwork() {
   const scope = state.network?.scope === 'internal' ? 'LAN' : 'Internet';
   const method = state.network?.method || 'unknown';
 
-  networkLabel.textContent = `${scope} · ${method}`;
+  networkLabel.textContent = `${scope} - ${method}`;
   versionLabel.textContent = `v${state.version}`;
 }
 
@@ -126,6 +126,9 @@ function renderCategory(category, applications) {
 function renderCard(application) {
   const card = document.createElement(application.resolved_url ? 'a' : 'article');
   card.className = `app-card visibility-${application.visibility}`;
+  const targetLabel = targetLabelFor(application.resolved_target);
+  const visibilityLabel = visibilityLabelFor(application.visibility);
+  const host = hostLabel(application.resolved_url);
 
   if (application.resolved_url) {
     card.href = application.resolved_url;
@@ -137,18 +140,54 @@ function renderCard(application) {
 
   card.innerHTML = `
     <div class="card-topline">
-      <img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy">
-      <span class="chip">${escapeHtml(application.resolved_target)}</span>
+      <span class="icon-frame">
+        <img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy" onerror="this.src='/assets/icons/default.svg'">
+      </span>
+      <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>
     </div>
     <h2>${escapeHtml(application.name)}</h2>
     <p>${escapeHtml(application.description || 'Aucune description')}</p>
+    <div class="endpoint">
+      <span>Endpoint</span>
+      <strong>${escapeHtml(host)}</strong>
+    </div>
     <div class="card-footer">
-      <span>${escapeHtml(application.visibility)}</span>
-      <span>${application.resolved_url ? 'Ouvrir' : 'URL manquante'}</span>
+      <span>${escapeHtml(visibilityLabel)}</span>
+      <span>${application.resolved_url ? 'Ouvrir ->' : 'URL manquante'}</span>
     </div>
   `;
 
   return card;
+}
+
+function targetLabelFor(target) {
+  return {
+    internal: 'LAN',
+    external: 'WEB',
+    fallback: 'Fallback',
+  }[target] || 'N/A';
+}
+
+function visibilityLabelFor(visibility) {
+  return {
+    internal: 'LAN uniquement',
+    external: 'Web uniquement',
+    both: 'LAN + Web',
+  }[visibility] || visibility;
+}
+
+function hostLabel(url) {
+  if (!url) {
+    return 'Non configure';
+  }
+
+  try {
+    const parsed = new URL(url);
+
+    return parsed.host;
+  } catch {
+    return url;
+  }
 }
 
 function escapeHtml(value) {

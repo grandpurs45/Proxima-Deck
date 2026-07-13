@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Vaultwarden">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#101827" stroke="#fb7185" stroke-width="2"/>
+  <path d="M22 29V24C22 18 26 14 32 14C38 14 42 18 42 24V29" stroke="#f8fafc" stroke-width="4" stroke-linecap="round"/>
+  <rect x="18" y="28" width="28" height="22" rx="5" fill="#fb7185"/>
+  <circle cx="32" cy="39" r="3" fill="#101827"/>
+</svg>

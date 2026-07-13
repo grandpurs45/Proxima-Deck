@@ -1,0 +1,5 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Proxmox">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#111827" stroke="#f97316" stroke-width="2"/>
+  <path d="M20 22H33C39 22 43 26 43 32C43 38 39 42 33 42H20V22Z" fill="#f97316"/>
+  <path d="M27 29H33C35 29 36 30 36 32C36 34 35 35 33 35H27V29Z" fill="#111827"/>
+</svg>

@@ -6,7 +6,7 @@ applications:
     visibility: internal
     internal_url: https://proxmox.lan
     external_url:
-    icon: default.svg
+    icon: proxmox.svg
     order: 10
 
   - id: uptime-kuma
@@ -16,7 +16,7 @@ applications:
     visibility: both
     internal_url: http://uptime.lan:3001
     external_url: https://status.example.com
-    icon: default.svg
+    icon: uptime-kuma.svg
     order: 20
 
   - id: homeassistant
@@ -26,7 +26,7 @@ applications:
     visibility: both
     internal_url: http://ha.lan:8123
     external_url: https://ha.example.com
-    icon: default.svg
+    icon: homeassistant.svg
     order: 30
 
   - id: vaultwarden
@@ -36,5 +36,5 @@ applications:
     visibility: external
     internal_url: http://vaultwarden.lan
     external_url: https://vault.example.com
-    icon: default.svg
+    icon: vaultwarden.svg
     order: 40

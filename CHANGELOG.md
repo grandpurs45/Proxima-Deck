@@ -4,6 +4,19 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.2.0] - 2026-07-13
+
+### Ajoute
+
+- Icones SVG dediees pour Proxmox, Uptime Kuma, Home Assistant et Vaultwarden.
+- Affichage du host cible sur chaque tuile.
+- Libelles lisibles pour la visibilite et le contexte de l'URL resolue.
+- Fallback automatique vers `default.svg` si une icone est manquante.
+
+### Corrige
+
+- Remplacement de caracteres d'interface sensibles a l'encodage par des variantes ASCII robustes.
+
 ## [0.1.1] - 2026-07-13
 
 ### Corrige

@@ -54,3 +54,22 @@ icon: homeassistant.svg
 ```
 
 Le fichier `default.svg` sert d'icone par defaut.
+
+Icones fournies dans le socle actuel :
+
+- `default.svg`
+- `proxmox.svg`
+- `uptime-kuma.svg`
+- `homeassistant.svg`
+- `vaultwarden.svg`
+
+## Inventaire homelab
+
+Pour remplacer les exemples par votre vraie configuration, ajoutez une entree par service avec au minimum :
+
+- nom
+- categorie
+- visibilite attendue
+- URL LAN
+- URL externe si elle existe
+- icone souhaitee

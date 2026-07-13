@@ -186,13 +186,13 @@ h1 {
 }
 
 .category-header::before {
-  content: "▾";
+  content: "v";
   width: 24px;
   color: var(--cyan);
 }
 
 .category-header[aria-expanded="false"]::before {
-  content: "▸";
+  content: ">";
 }
 
 .category-header span {
@@ -228,6 +228,11 @@ h1 {
   transition: border-color 160ms ease, transform 160ms ease, background 160ms ease;
 }
 
+.app-card {
+  min-height: 240px;
+  grid-template-rows: auto auto 1fr auto auto;
+}
+
 .app-card:hover {
   border-color: rgba(103, 232, 249, 0.62);
   transform: translateY(-2px);
@@ -251,6 +256,21 @@ h1 {
   height: 44px;
 }
 
+.icon-frame {
+  display: grid;
+  width: 52px;
+  height: 52px;
+  place-items: center;
+  border: 1px solid rgba(103, 232, 249, 0.2);
+  border-radius: 8px;
+  background: rgba(2, 6, 23, 0.42);
+}
+
+.icon-frame img {
+  width: 38px;
+  height: 38px;
+}
+
 .chip {
   max-width: 110px;
   overflow: hidden;
@@ -263,6 +283,16 @@ h1 {
   white-space: nowrap;
 }
 
+.chip-external {
+  border-color: rgba(245, 158, 11, 0.45);
+  color: var(--warn);
+}
+
+.chip-fallback {
+  border-color: rgba(251, 113, 133, 0.5);
+  color: var(--danger);
+}
+
 .app-card h2 {
   margin: 18px 0 8px;
   font-size: 1.15rem;
@@ -272,6 +302,31 @@ h1 {
   margin: 0;
   color: var(--muted);
   line-height: 1.45;
+}
+
+.endpoint {
+  display: grid;
+  gap: 4px;
+  min-width: 0;
+  margin-top: 18px;
+  border-top: 1px solid rgba(148, 163, 184, 0.14);
+  padding-top: 12px;
+}
+
+.endpoint span {
+  color: var(--muted);
+  font-size: 0.68rem;
+  font-weight: 800;
+  text-transform: uppercase;
+}
+
+.endpoint strong {
+  overflow: hidden;
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 700;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .card-footer {
