@@ -4,6 +4,12 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.1.1] - 2026-07-13
+
+### Corrige
+
+- Ajout de la version aux URLs des assets CSS/JS pour limiter les problemes de cache navigateur apres mise a jour.
+
 ## [0.1.0] - 2026-07-12
 
 ### Ajoute

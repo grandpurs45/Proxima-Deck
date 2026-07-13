@@ -1,6 +1,7 @@
 <?php
 $versionPath = dirname(__DIR__) . '/VERSION';
 $version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)) : 'dev';
+$assetVersion = rawurlencode($version);
 ?>
 <!doctype html>
 <html lang="fr">
@@ -9,7 +10,7 @@ $version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>ProximaDeck</title>
     <meta name="description" content="Mission Control leger et auto-heberge pour homelab.">
-    <link rel="stylesheet" href="/assets/styles.css">
+    <link rel="stylesheet" href="/assets/styles.css?v=<?= $assetVersion ?>">
 </head>
 <body>
     <main class="shell">
@@ -43,6 +44,6 @@ $version = is_file($versionPath) ? trim((string) file_get_contents($versionPath)
         </section>
     </main>
 
-    <script src="/assets/app.js" defer></script>
+    <script src="/assets/app.js?v=<?= $assetVersion ?>" defer></script>
 </body>
 </html>
