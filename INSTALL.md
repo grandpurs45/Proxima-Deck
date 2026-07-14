@@ -37,6 +37,21 @@ Le service expose l'application sur `http://localhost:8080`.
 | `PROXIMADECK_CONFIG` | Chemin du fichier YAML | `config/applications.yaml` |
 | `PROXIMADECK_NETWORK_CONTEXT` | Force `internal` ou `external` | detection automatique |
 
+## Diagnostic reseau
+
+Pendant le developpement, vous pouvez forcer le contexte depuis l'URL :
+
+```text
+http://proximadeck.local/?context=internal
+http://proximadeck.local/?context=external
+```
+
+Le meme parametre est disponible cote API :
+
+```text
+/api/apps.php?context=external
+```
+
 ## Reverse proxy
 
 ProximaDeck ne depend pas d'un reverse proxy specifique. Pour forcer le contexte via proxy, envoyez l'en-tete :

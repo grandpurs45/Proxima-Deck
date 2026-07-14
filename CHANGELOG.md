@@ -4,6 +4,18 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.5.0] - 2026-07-14
+
+### Ajoute
+
+- Mode diagnostic reseau via `?context=internal` ou `?context=external`.
+- Barre de diagnostic dans l'interface pour tester Auto, LAN et Internet.
+- Transmission du contexte diagnostic a l'API pour valider le filtrage et la resolution des URLs.
+
+### Corrige
+
+- Remplacement de caracteres de separation sensibles a l'encodage dans les messages frontend.
+
 ## [0.4.0] - 2026-07-13
 
 ### Ajoute

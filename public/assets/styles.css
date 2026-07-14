@@ -111,7 +111,7 @@ h1 {
   display: grid;
   grid-template-columns: minmax(0, 1fr) 140px;
   gap: 14px;
-  margin-bottom: 28px;
+  margin-bottom: 14px;
 }
 
 .search-box {
@@ -158,6 +158,57 @@ h1 {
 .metric small {
   color: var(--muted);
   font-size: 0.72rem;
+}
+
+.diagnostic-panel {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  margin-bottom: 28px;
+  border: 1px solid rgba(103, 232, 249, 0.18);
+  border-radius: 8px;
+  padding: 12px 14px;
+  background: rgba(13, 20, 34, 0.55);
+}
+
+.diagnostic-panel div {
+  display: grid;
+  gap: 4px;
+}
+
+.diagnostic-panel strong {
+  color: var(--text);
+  font-size: 0.84rem;
+}
+
+.diagnostic-panel span {
+  color: var(--muted);
+  font-size: 0.78rem;
+}
+
+.diagnostic-actions {
+  display: inline-flex;
+  gap: 8px;
+}
+
+.diagnostic-actions a {
+  display: inline-flex;
+  min-height: 34px;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  padding: 0 12px;
+  color: var(--muted);
+  font-size: 0.8rem;
+  font-weight: 800;
+}
+
+.diagnostic-actions a:hover,
+.diagnostic-actions a.is-active {
+  border-color: rgba(103, 232, 249, 0.65);
+  color: var(--cyan);
+  background: rgba(103, 232, 249, 0.08);
 }
 
 .dashboard {
@@ -426,6 +477,20 @@ h1 {
   }
 
   .status-panel {
+    justify-content: center;
+  }
+
+  .diagnostic-panel {
+    align-items: stretch;
+    flex-direction: column;
+  }
+
+  .diagnostic-actions {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .diagnostic-actions a {
     justify-content: center;
   }
 

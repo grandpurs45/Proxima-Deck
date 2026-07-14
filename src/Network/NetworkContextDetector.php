@@ -6,10 +6,15 @@ namespace ProximaDeck\Network;
 
 final class NetworkContextDetector
 {
-    public function detect(array $server): NetworkContext
+    public function detect(array $server, array $query = []): NetworkContext
     {
         $forcedContext = strtolower((string) \env_value('PROXIMADECK_NETWORK_CONTEXT', ''));
         $clientIp = $this->clientIp($server);
+        $diagnosticContext = strtolower((string) ($query['context'] ?? ''));
+
+        if (in_array($diagnosticContext, ['internal', 'external'], true)) {
+            return new NetworkContext($diagnosticContext, $clientIp, 'diagnostic_query');
+        }
 
         if (in_array($forcedContext, ['internal', 'external'], true)) {
             return new NetworkContext($forcedContext, $clientIp, 'environment');

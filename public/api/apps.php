@@ -24,7 +24,7 @@ try {
         throw new ConfigValidationException($validation);
     }
 
-    $context = (new NetworkContextDetector())->detect($_SERVER);
+    $context = (new NetworkContextDetector())->detect($_SERVER, $_GET);
     $iconResolver = new IconResolver(dirname(__DIR__) . '/assets/icons');
     $applications = (new ApplicationPresenter($iconResolver))->visibleApplications($repository->all(), $context);
     $versionPath = dirname(__DIR__, 2) . '/VERSION';

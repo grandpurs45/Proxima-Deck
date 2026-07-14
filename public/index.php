@@ -28,13 +28,25 @@ $assetVersion = rawurlencode($version);
 
         <section class="command-row" aria-label="Recherche et etat">
             <label class="search-box">
-                <span class="search-icon" aria-hidden="true">⌕</span>
+                <span class="search-icon" aria-hidden="true">?</span>
                 <input id="searchInput" type="search" placeholder="Rechercher une application" autocomplete="off">
             </label>
             <div class="metric">
                 <span id="appCount">0</span>
                 <small>apps visibles</small>
             </div>
+        </section>
+
+        <section class="diagnostic-panel" aria-label="Diagnostic reseau">
+            <div>
+                <strong>Diagnostic reseau</strong>
+                <span id="diagnosticLabel">Detection automatique</span>
+            </div>
+            <nav class="diagnostic-actions" aria-label="Choix du contexte reseau">
+                <a href="/" data-context="auto">Auto</a>
+                <a href="/?context=internal" data-context="internal">LAN</a>
+                <a href="/?context=external" data-context="external">Internet</a>
+            </nav>
         </section>
 
         <section id="warningState" class="warning-state" hidden></section>

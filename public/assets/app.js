@@ -13,6 +13,8 @@ const searchInput = document.querySelector('#searchInput');
 const networkLabel = document.querySelector('#networkLabel');
 const versionLabel = document.querySelector('#versionLabel');
 const appCount = document.querySelector('#appCount');
+const diagnosticLabel = document.querySelector('#diagnosticLabel');
+const diagnosticActions = document.querySelectorAll('[data-context]');
 
 searchInput.addEventListener('input', (event) => {
   state.query = event.target.value.trim().toLowerCase();
@@ -21,7 +23,7 @@ searchInput.addEventListener('input', (event) => {
 
 async function boot() {
   try {
-    const response = await fetch('/api/apps.php', { headers: { Accept: 'application/json' } });
+    const response = await fetch(apiUrl(), { headers: { Accept: 'application/json' } });
     const payload = await response.json();
 
     if (!response.ok) {
@@ -32,6 +34,7 @@ async function boot() {
     state.network = payload.network;
     state.version = payload.version || 'dev';
     renderNetwork();
+    renderDiagnostic();
     renderWarnings(payload.validation?.warnings || []);
     render();
   } catch (error) {
@@ -41,10 +44,50 @@ async function boot() {
 
 function renderNetwork() {
   const scope = state.network?.scope === 'internal' ? 'LAN' : 'Internet';
-  const method = state.network?.method || 'unknown';
+  const method = methodLabel(state.network?.method || 'unknown');
 
   networkLabel.textContent = `${scope} - ${method}`;
   versionLabel.textContent = `v${state.version}`;
+}
+
+function renderDiagnostic() {
+  const selected = diagnosticContext();
+  const isForced = state.network?.method === 'diagnostic_query';
+
+  diagnosticLabel.textContent = isForced
+    ? `Mode force: ${selected === 'internal' ? 'LAN' : 'Internet'}`
+    : 'Detection automatique';
+
+  for (const action of diagnosticActions) {
+    const context = action.dataset.context || 'auto';
+    action.classList.toggle('is-active', context === selected);
+  }
+}
+
+function apiUrl() {
+  const selected = diagnosticContext();
+  const url = new URL('/api/apps.php', window.location.origin);
+
+  if (selected !== 'auto') {
+    url.searchParams.set('context', selected);
+  }
+
+  return url.toString();
+}
+
+function diagnosticContext() {
+  const context = new URLSearchParams(window.location.search).get('context');
+
+  return ['internal', 'external'].includes(context) ? context : 'auto';
+}
+
+function methodLabel(method) {
+  return {
+    diagnostic_query: 'diagnostic',
+    environment: 'env',
+    reverse_proxy: 'proxy',
+    private_ip: 'auto IP',
+  }[method] || method;
 }
 
 function render() {
@@ -104,8 +147,8 @@ function renderError(error) {
 }
 
 function renderIssue(issue) {
-  const app = issue.application_id ? ` · ${issue.application_id}` : '';
-  const field = issue.field ? ` · ${issue.field}` : '';
+  const app = issue.application_id ? ` - ${issue.application_id}` : '';
+  const field = issue.field ? ` - ${issue.field}` : '';
 
   return `
     <li>
