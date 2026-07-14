@@ -73,16 +73,6 @@ Le diagnostic est desactive par defaut. Activez-le seulement en local :
 PROXIMADECK_DIAGNOSTIC_MODE=true
 ```
 
-## Developpement local
-
-Avec XAMPP, utilisez l'URL locale prevue :
-
-```text
-http://proximadeck.local
-```
-
-Le virtual host peut pointer vers la racine du projet ou directement vers `public/`. Le fichier `.htaccess` redirige vers `public/` lorsque le virtual host pointe vers la racine.
-
 ## Docker
 
 ```bash
