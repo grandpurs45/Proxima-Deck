@@ -1,0 +1,6 @@
+<svg width="64" height="64" viewBox="0 0 64 64" fill="none" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Confluence">
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#07111f" stroke="#67e8f9" stroke-width="2"/>
+  <path d="M20 37.5C27 42 35 43.5 45 39.5L48 46C35 51 23 48.5 16 43L20 37.5Z" fill="#67e8f9"/>
+  <path d="M44 26.5C37 22 29 20.5 19 24.5L16 18C29 13 41 15.5 48 21L44 26.5Z" fill="#3B82F6"/>
+  <path d="M24 27.5C29 31.5 35 33 41 32L44 37C35 39.5 27 37.5 20 32.5L24 27.5Z" fill="#F8FAFC"/>
+</svg>

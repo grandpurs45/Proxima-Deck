@@ -4,6 +4,14 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.6.1] - 2026-07-14
+
+### Ameliore
+
+- Affichage desktop compacte avec les categories reparties en colonnes.
+- Reduction de la hauteur de l en-tete, du diagnostic et des tuiles.
+- Les quatre premiers services tiennent maintenant dans un ecran de 1280 x 720.
+
 ## [0.6.0] - 2026-07-14
 
 ### Ajoute
