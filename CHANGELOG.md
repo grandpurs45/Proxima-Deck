@@ -4,6 +4,14 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.5.1] - 2026-07-14
+
+### Securite
+
+- Le mode diagnostic `?context=internal|external` est maintenant desactive par defaut.
+- Ajout de `PROXIMADECK_DIAGNOSTIC_MODE=true` pour activer explicitement le diagnostic en local.
+- L'interface indique lorsque le diagnostic est desactive.
+
 ## [0.5.0] - 2026-07-14
 
 ### Ajoute

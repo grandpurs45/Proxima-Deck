@@ -8,5 +8,6 @@ services:
     environment:
       PROXIMADECK_CONFIG: /var/www/html/config/applications.yaml
       # PROXIMADECK_NETWORK_CONTEXT: internal
+      # PROXIMADECK_DIAGNOSTIC_MODE: "false"
     volumes:
       - ./config/applications.yaml:/var/www/html/config/applications.yaml:ro

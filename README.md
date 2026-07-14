@@ -61,6 +61,12 @@ http://proximadeck.local/?context=internal
 http://proximadeck.local/?context=external
 ```
 
+Le diagnostic est desactive par defaut. Activez-le seulement en local :
+
+```env
+PROXIMADECK_DIAGNOSTIC_MODE=true
+```
+
 ## Developpement local
 
 Avec XAMPP, utilisez l'URL locale prevue :

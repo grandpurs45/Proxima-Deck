@@ -24,6 +24,12 @@ final class NetworkContext
             'scope' => $this->scope,
             'client_ip' => $this->clientIp,
             'method' => $this->method,
+            'diagnostic_enabled' => $this->diagnosticEnabled(),
         ];
+    }
+
+    private function diagnosticEnabled(): bool
+    {
+        return filter_var(\env_value('PROXIMADECK_DIAGNOSTIC_MODE', 'false'), FILTER_VALIDATE_BOOLEAN);
     }
 }

@@ -12,7 +12,7 @@ final class NetworkContextDetector
         $clientIp = $this->clientIp($server);
         $diagnosticContext = strtolower((string) ($query['context'] ?? ''));
 
-        if (in_array($diagnosticContext, ['internal', 'external'], true)) {
+        if ($this->diagnosticModeEnabled() && in_array($diagnosticContext, ['internal', 'external'], true)) {
             return new NetworkContext($diagnosticContext, $clientIp, 'diagnostic_query');
         }
 
@@ -63,5 +63,10 @@ final class NetworkContextDetector
             FILTER_VALIDATE_IP,
             FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE
         ) === false;
+    }
+
+    private function diagnosticModeEnabled(): bool
+    {
+        return filter_var(\env_value('PROXIMADECK_DIAGNOSTIC_MODE', 'false'), FILTER_VALIDATE_BOOLEAN);
     }
 }

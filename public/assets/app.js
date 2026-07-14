@@ -53,14 +53,19 @@ function renderNetwork() {
 function renderDiagnostic() {
   const selected = diagnosticContext();
   const isForced = state.network?.method === 'diagnostic_query';
+  const isEnabled = state.network?.diagnostic_enabled === true;
 
-  diagnosticLabel.textContent = isForced
+  diagnosticLabel.textContent = !isEnabled
+    ? 'Desactive en production'
+    : isForced
     ? `Mode force: ${selected === 'internal' ? 'LAN' : 'Internet'}`
     : 'Detection automatique';
 
   for (const action of diagnosticActions) {
     const context = action.dataset.context || 'auto';
     action.classList.toggle('is-active', context === selected);
+    action.classList.toggle('is-disabled', !isEnabled && context !== 'auto');
+    action.setAttribute('aria-disabled', String(!isEnabled && context !== 'auto'));
   }
 }
 

@@ -39,7 +39,11 @@ Le service expose l'application sur `http://localhost:8080`.
 
 ## Diagnostic reseau
 
-Pendant le developpement, vous pouvez forcer le contexte depuis l'URL :
+Pendant le developpement, vous pouvez forcer le contexte depuis l'URL si le mode diagnostic est active :
+
+```env
+PROXIMADECK_DIAGNOSTIC_MODE=true
+```
 
 ```text
 http://proximadeck.local/?context=internal
@@ -51,6 +55,8 @@ Le meme parametre est disponible cote API :
 ```text
 /api/apps.php?context=external
 ```
+
+Ne laissez pas `PROXIMADECK_DIAGNOSTIC_MODE=true` en production. Sans cette variable, les parametres `?context=internal` et `?context=external` sont ignores.
 
 ## Reverse proxy
 
