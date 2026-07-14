@@ -54,6 +54,12 @@ Validez la configuration en ligne de commande :
 php tools/validate-config.php
 ```
 
+Lancez la suite de tests automatisee :
+
+```bash
+php tools/run-tests.php
+```
+
 Testez le contexte reseau sans changer de reseau :
 
 ```text

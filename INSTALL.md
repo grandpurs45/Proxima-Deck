@@ -22,6 +22,12 @@ Vous pouvez valider la configuration avec :
 php tools/validate-config.php
 ```
 
+Puis verifier les comportements reseau, la visibilite et les icones avec :
+
+```bash
+php tools/run-tests.php
+```
+
 ## Installation avec Docker
 
 ```bash

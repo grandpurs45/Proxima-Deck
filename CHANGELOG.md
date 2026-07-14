@@ -4,6 +4,18 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.6.0] - 2026-07-14
+
+### Ajoute
+
+- Suite de tests PHP autonome lancee avec `php tools/run-tests.php`.
+- Couverture de la detection reseau, du verrouillage du diagnostic, de la visibilite des applications, de la validation YAML et des fallbacks d'icones.
+
+### Securite
+
+- Une application sans `external_url` est toujours masquee en contexte externe.
+- Suppression du fallback d'une URL externe vers une URL interne.
+
 ## [0.5.1] - 2026-07-14
 
 ### Securite
