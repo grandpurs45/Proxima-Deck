@@ -35,14 +35,14 @@ $suite->test('duplicate IDs and invalid URLs are rejected', function () use ($su
     $suite->assertTrue(in_array('invalid_url', $codes, true));
 });
 
-$suite->test('missing icon file produces a warning', function () use ($suite, $validator, $validApplication): void {
+$suite->test('missing icon file is accepted for automatic fallback', function () use ($suite, $validator, $validApplication): void {
     $application = $validApplication;
     $application['icon'] = 'does-not-exist.svg';
     $result = $validator->validate([$application]);
 
     $suite->assertSame(false, $result->hasErrors());
-    $suite->assertSame(true, $result->hasWarnings());
-    $suite->assertSame('missing_icon_file', $result->toArray()[0]['code']);
+    $suite->assertSame(false, $result->hasWarnings());
+    $suite->assertSame([], $result->toArray());
 });
 
 $suite->test('icon paths are rejected', function () use ($suite, $validator, $validApplication): void {

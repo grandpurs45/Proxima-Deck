@@ -3,7 +3,7 @@ const state = {
   network: null,
   version: 'dev',
   query: '',
-  collapsedCategories: new Set(),
+  activeCategory: 'all',
 };
 
 const dashboard = document.querySelector('#dashboard');
@@ -15,6 +15,7 @@ const versionLabel = document.querySelector('#versionLabel');
 const appCount = document.querySelector('#appCount');
 const diagnosticLabel = document.querySelector('#diagnosticLabel');
 const diagnosticActions = document.querySelectorAll('[data-context]');
+const categoryFilters = document.querySelector('#categoryFilters');
 
 searchInput.addEventListener('input', (event) => {
   state.query = event.target.value.trim().toLowerCase();
@@ -96,6 +97,14 @@ function methodLabel(method) {
 }
 
 function render() {
+  const categories = categoryList(state.applications);
+
+  if (state.activeCategory !== 'all' && !categories.includes(state.activeCategory)) {
+    state.activeCategory = 'all';
+  }
+
+  renderCategoryFilters(categories);
+
   const filtered = state.applications.filter((application) => {
     const haystack = [
       application.name,
@@ -104,17 +113,52 @@ function render() {
       application.visibility,
     ].join(' ').toLowerCase();
 
-    return haystack.includes(state.query);
-  });
+    const matchesQuery = haystack.includes(state.query);
+    const matchesCategory = state.activeCategory === 'all'
+      || application.category === state.activeCategory;
 
-  const groups = groupByCategory(filtered);
+    return matchesQuery && matchesCategory;
+  });
 
   appCount.textContent = String(filtered.length);
   emptyState.hidden = filtered.length > 0;
   dashboard.innerHTML = '';
 
-  for (const [category, applications] of groups) {
-    dashboard.appendChild(renderCategory(category, applications));
+  for (const application of filtered) {
+    dashboard.appendChild(renderCard(application));
+  }
+}
+
+function renderCategoryFilters(categories) {
+  categoryFilters.hidden = categories.length < 2;
+  categoryFilters.innerHTML = '';
+
+  if (categories.length < 2) {
+    return;
+  }
+
+  const filters = ['all', ...categories];
+
+  for (const category of filters) {
+    const button = document.createElement('button');
+    const count = category === 'all'
+      ? state.applications.length
+      : state.applications.filter((application) => application.category === category).length;
+
+    button.type = 'button';
+    button.className = 'category-filter';
+    button.classList.toggle('is-active', category === state.activeCategory);
+    button.setAttribute('aria-pressed', String(category === state.activeCategory));
+    button.innerHTML = `
+      <span>${escapeHtml(category === 'all' ? 'Toutes' : category)}</span>
+      <small>${count}</small>
+    `;
+    button.addEventListener('click', () => {
+      state.activeCategory = category;
+      render();
+    });
+
+    categoryFilters.appendChild(button);
   }
 }
 
@@ -164,54 +208,9 @@ function renderIssue(issue) {
   `;
 }
 
-function groupByCategory(applications) {
-  const groups = new Map();
-
-  for (const application of applications) {
-    if (!groups.has(application.category)) {
-      groups.set(application.category, []);
-    }
-
-    groups.get(application.category).push(application);
-  }
-
-  return [...groups.entries()].sort(([left], [right]) => left.localeCompare(right));
-}
-
-function renderCategory(category, applications) {
-  const section = document.createElement('section');
-  const isCollapsed = state.collapsedCategories.has(category);
-  section.className = 'category';
-
-  const header = document.createElement('button');
-  header.className = 'category-header';
-  header.type = 'button';
-  header.setAttribute('aria-expanded', String(!isCollapsed));
-  header.innerHTML = `
-    <span>${escapeHtml(category)}</span>
-    <small>${applications.length}</small>
-  `;
-  header.addEventListener('click', () => {
-    if (state.collapsedCategories.has(category)) {
-      state.collapsedCategories.delete(category);
-    } else {
-      state.collapsedCategories.add(category);
-    }
-
-    render();
-  });
-
-  const grid = document.createElement('div');
-  grid.className = 'app-grid';
-  grid.hidden = isCollapsed;
-
-  for (const application of applications) {
-    grid.appendChild(renderCard(application));
-  }
-
-  section.append(header, grid);
-
-  return section;
+function categoryList(applications) {
+  return [...new Set(applications.map((application) => application.category))]
+    .sort((left, right) => left.localeCompare(right));
 }
 
 function renderCard(application) {
@@ -220,6 +219,7 @@ function renderCard(application) {
   const targetLabel = targetLabelFor(application.resolved_target);
   const visibilityLabel = visibilityLabelFor(application.visibility);
   const host = hostLabel(application.resolved_url);
+  const icon = renderIcon(application);
 
   if (application.resolved_url) {
     card.href = application.resolved_url;
@@ -230,25 +230,38 @@ function renderCard(application) {
   }
 
   card.innerHTML = `
-    <div class="card-topline">
-      <span class="icon-frame" title="${escapeHtml(application.icon_label || 'Icone')}">
-        <img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy" onerror="this.src='/assets/icons/default.svg'">
-      </span>
+    <div class="card-identity">
+      ${icon}
+      <div class="card-title">
+        <h2>${escapeHtml(application.name)}</h2>
+        <p>${escapeHtml(application.category)} - ${escapeHtml(visibilityLabel)}</p>
+      </div>
       <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>
     </div>
-    <h2>${escapeHtml(application.name)}</h2>
-    <p>${escapeHtml(application.description || 'Aucune description')}</p>
-    <div class="endpoint">
-      <span>Endpoint</span>
+    <p class="card-description">${escapeHtml(application.description || 'Aucune description')}</p>
+    <div class="card-endpoint">
       <strong>${escapeHtml(host)}</strong>
-    </div>
-    <div class="card-footer">
-      <span>${escapeHtml(visibilityLabel)}</span>
-      <span>${application.resolved_url ? 'Ouvrir ->' : 'URL manquante'}</span>
+      <span${application.resolved_url ? ' aria-hidden="true"' : ''}>${application.resolved_url ? '&#8599;' : 'URL manquante'}</span>
     </div>
   `;
 
   return card;
+}
+
+function renderIcon(application) {
+  const allowedTones = ['cyan', 'green', 'amber', 'rose', 'blue'];
+  const tone = allowedTones.includes(application.icon_tone) ? application.icon_tone : 'cyan';
+  const initials = escapeHtml(application.icon_initials || 'AP');
+  const image = application.icon
+    ? `<img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy" onerror="this.remove()">`
+    : '';
+
+  return `
+    <span class="icon-frame icon-tone-${tone}" title="${escapeHtml(application.icon_label || 'Monogramme automatique')}">
+      <span class="icon-monogram" aria-hidden="true">${initials}</span>
+      ${image}
+    </span>
+  `;
 }
 
 function targetLabelFor(target) {

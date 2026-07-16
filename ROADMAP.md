@@ -3,8 +3,9 @@
 ## V1
 
 - Dashboard une page.
-- Cartes d'applications.
-- Categories repliables.
+- Grille compacte d'applications.
+- Filtres de categories.
+- Monogrammes automatiques.
 - Recherche instantanee.
 - Configuration YAML.
 - URL interne/externe resolue automatiquement.

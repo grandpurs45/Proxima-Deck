@@ -4,6 +4,20 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.7.0] - 2026-07-16
+
+### Ajoute
+
+- Monogrammes automatiques avec couleur stable lorsqu aucune icone de service n est disponible.
+- Filtres de categories avec compteur d applications.
+
+### Ameliore
+
+- Grille unique de tuiles compactes adaptee aux tableaux de bord contenant de nombreux liens.
+- Le champ `icon` est maintenant facultatif sans fallback generique a gerer.
+- Une icone absente bascule silencieusement sur le monogramme automatique.
+- Affichage plus dense du nom, de la categorie, de la cible et du host.
+
 ## [0.6.1] - 2026-07-14
 
 ### Ameliore

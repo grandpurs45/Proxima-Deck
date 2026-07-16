@@ -79,14 +79,6 @@ final class ApplicationConfigValidator
             if ($icon !== '') {
                 if ($icon !== basename($icon) || preg_match('/^[a-zA-Z0-9._-]+\.svg$/', $icon) !== 1) {
                     $issues[] = $this->error('invalid_icon_name', 'Le champ icon doit etre un nom de fichier SVG sans chemin.', $applicationRef, 'icon');
-                } elseif (!is_file($this->iconDirectory . DIRECTORY_SEPARATOR . $icon)) {
-                    $issues[] = new ConfigValidationIssue(
-                        'warning',
-                        'missing_icon_file',
-                        sprintf('L icone "%s" est introuvable. Un fallback sera utilise.', $icon),
-                        $applicationRef,
-                        'icon'
-                    );
                 }
             }
         }

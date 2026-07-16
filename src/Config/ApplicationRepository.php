@@ -46,7 +46,7 @@ final class ApplicationRepository
             'name' => (string) ($application['name'] ?? 'Application'),
             'description' => (string) ($application['description'] ?? ''),
             'category' => (string) ($application['category'] ?? 'Outils'),
-            'icon' => (string) ($application['icon'] ?? 'default.svg'),
+            'icon' => (string) ($application['icon'] ?? ''),
             'internal_url' => $application['internal_url'] ?? null,
             'external_url' => $application['external_url'] ?? null,
             'visibility' => $visibility,

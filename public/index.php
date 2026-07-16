@@ -28,7 +28,7 @@ $assetVersion = rawurlencode($version);
 
         <section class="command-row" aria-label="Recherche et etat">
             <label class="search-box">
-                <span class="search-icon" aria-hidden="true">?</span>
+                <span class="search-icon" aria-hidden="true">&#128269;</span>
                 <input id="searchInput" type="search" placeholder="Rechercher une application" autocomplete="off">
             </label>
             <div class="metric">
@@ -48,6 +48,8 @@ $assetVersion = rawurlencode($version);
                 <a href="/?context=external" data-context="external">Internet</a>
             </nav>
         </section>
+
+        <nav id="categoryFilters" class="category-filters" aria-label="Filtrer par categorie" hidden></nav>
 
         <section id="warningState" class="warning-state" hidden></section>
         <section id="dashboard" class="dashboard" aria-live="polite"></section>

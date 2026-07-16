@@ -6,9 +6,8 @@ namespace ProximaDeck;
 
 final class IconResolver
 {
-    private const DEFAULT_ICON = 'default.svg';
-
     private const SERVICE_ICONS = [
+        'confluence' => 'confluence.svg',
         'homeassistant' => 'homeassistant.svg',
         'proxmox' => 'proxmox.svg',
         'umami' => 'umami.svg',
@@ -16,17 +15,7 @@ final class IconResolver
         'vaultwarden' => 'vaultwarden.svg',
     ];
 
-    private const CATEGORY_ICONS = [
-        'developpement' => 'category-development.svg',
-        'domotique' => 'category-home.svg',
-        'infrastructure' => 'category-infrastructure.svg',
-        'monitoring' => 'category-monitoring.svg',
-        'multimedia' => 'category-media.svg',
-        'outils' => 'category-tools.svg',
-        'reseau' => 'category-network.svg',
-        'stockage' => 'category-storage.svg',
-        'web' => 'category-web.svg',
-    ];
+    private const MONOGRAM_TONES = ['cyan', 'green', 'amber', 'rose', 'blue'];
 
     public function __construct(private readonly string $iconDirectory)
     {
@@ -37,22 +26,16 @@ final class IconResolver
         $configuredIcon = $this->safeIconName((string) ($application['icon'] ?? ''));
 
         if ($configuredIcon !== null && $this->exists($configuredIcon)) {
-            return $this->result($configuredIcon, 'configured', 'Icone configuree');
+            return $this->result($configuredIcon, 'configured', 'Icone configuree', $application);
         }
 
         $serviceIcon = self::SERVICE_ICONS[$this->slug((string) ($application['id'] ?? ''))] ?? null;
 
         if ($serviceIcon !== null && $this->exists($serviceIcon)) {
-            return $this->result($serviceIcon, 'service', 'Icone service');
+            return $this->result($serviceIcon, 'service', 'Icone service', $application);
         }
 
-        $categoryIcon = self::CATEGORY_ICONS[$this->slug((string) ($application['category'] ?? ''))] ?? null;
-
-        if ($categoryIcon !== null && $this->exists($categoryIcon)) {
-            return $this->result($categoryIcon, 'category', 'Icone categorie');
-        }
-
-        return $this->result(self::DEFAULT_ICON, 'default', 'Icone par defaut');
+        return $this->result('', 'monogram', 'Monogramme automatique', $application);
     }
 
     private function safeIconName(string $icon): ?string
@@ -75,13 +58,40 @@ final class IconResolver
         return is_file($this->iconDirectory . DIRECTORY_SEPARATOR . $icon);
     }
 
-    private function result(string $icon, string $source, string $label): array
+    private function result(string $icon, string $source, string $label, array $application): array
     {
+        $identity = trim((string) ($application['name'] ?? $application['id'] ?? 'Application'));
+        $toneIdentity = trim((string) ($application['id'] ?? $identity));
+
         return [
             'icon' => $icon,
             'icon_source' => $source,
             'icon_label' => $label,
+            'icon_initials' => $this->initials($identity),
+            'icon_tone' => $this->tone($toneIdentity),
         ];
+    }
+
+    private function initials(string $value): string
+    {
+        $normalized = iconv('UTF-8', 'ASCII//TRANSLIT//IGNORE', $value);
+        $normalized = $normalized === false ? $value : $normalized;
+        $words = preg_split('/[^a-zA-Z0-9]+/', trim($normalized), -1, PREG_SPLIT_NO_EMPTY) ?: [];
+
+        if (count($words) >= 2) {
+            return strtoupper(substr($words[0], 0, 1) . substr($words[1], 0, 1));
+        }
+
+        $initials = strtoupper(substr($words[0] ?? 'AP', 0, 2));
+
+        return $initials !== '' ? $initials : 'AP';
+    }
+
+    private function tone(string $value): string
+    {
+        $hash = (int) sprintf('%u', crc32(strtolower($value)));
+
+        return self::MONOGRAM_TONES[$hash % count(self::MONOGRAM_TONES)];
     }
 
     private function slug(string $value): string

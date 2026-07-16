@@ -13,7 +13,6 @@ applications:
     visibility: both
     internal_url: http://ha.lan:8123
     external_url: https://ha.example.com
-    icon: default.svg
     order: 10
 ```
 
@@ -28,7 +27,7 @@ applications:
 | `visibility` | non | `internal`, `external` ou `both`. Defaut : `both`. |
 | `internal_url` | non | URL utilisee depuis le LAN. |
 | `external_url` | non | URL utilisee depuis Internet. |
-| `icon` | non | Nom du fichier SVG dans `public/assets/icons/`. |
+| `icon` | non | Nom d'un fichier SVG optionnel dans `public/assets/icons/`. Sans valeur, un monogramme est genere. |
 | `order` | non | Ordre d'affichage dans la categorie. Defaut : `100`. |
 
 ## Visibilite
@@ -43,24 +42,25 @@ Si le visiteur est detecte sur le LAN, ProximaDeck utilise `internal_url`.
 
 Si le visiteur est detecte depuis Internet, ProximaDeck utilise `external_url`.
 
-Si l'URL prioritaire est absente mais que l'autre URL existe, ProximaDeck l'utilise comme secours et marque la tuile en `fallback`.
+Depuis le LAN, si `internal_url` est absente mais que `external_url` existe, ProximaDeck utilise l'URL publique comme secours et marque la tuile en `fallback`.
+
+Depuis Internet, une URL interne n'est jamais utilisee comme secours. Une application sans `external_url` reste masquee.
 
 ## Icones
 
-Placez les icones SVG dans `public/assets/icons/`, puis referencez seulement le nom du fichier :
+Le champ `icon` peut etre omis. ProximaDeck utilise une icone connue du service ou genere automatiquement un monogramme colore a partir du nom.
+
+Pour utiliser une icone personnalisee, placez le SVG dans `public/assets/icons/`, puis referencez seulement le nom du fichier :
 
 ```yaml
 icon: homeassistant.svg
 ```
 
-Le fichier `default.svg` sert d'icone par defaut.
-
 ProximaDeck resout les icones dans cet ordre :
 
 1. icone configuree dans `applications.yaml`, si le fichier existe ;
 2. icone connue du service, basee sur `id` ;
-3. icone de categorie, basee sur `category` ;
-4. `default.svg`.
+3. monogramme automatique base sur le nom de l application.
 
 Les noms d'icones doivent etre des fichiers SVG simples, sans chemin :
 
@@ -77,16 +77,7 @@ icon: icon.png
 
 Icones fournies dans le socle actuel :
 
-- `default.svg`
-- `category-development.svg`
-- `category-home.svg`
-- `category-infrastructure.svg`
-- `category-media.svg`
-- `category-monitoring.svg`
-- `category-network.svg`
-- `category-storage.svg`
-- `category-tools.svg`
-- `category-web.svg`
+- `confluence.svg`
 - `proxmox.svg`
 - `umami.svg`
 - `uptime-kuma.svg`
@@ -102,7 +93,7 @@ Pour remplacer les exemples par votre vraie configuration, ajoutez une entree pa
 - visibilite attendue
 - URL LAN
 - URL externe si elle existe
-- icone souhaitee
+- icone souhaitee, uniquement si le monogramme ou l icone automatique ne convient pas
 
 ## Validation
 
@@ -120,4 +111,4 @@ La validation detecte notamment :
 - URLs invalides ;
 - URL obligatoire manquante selon la visibilite ;
 - nom d'icone invalide ;
-- fichier d'icone introuvable.
+- format du nom d'icone invalide.

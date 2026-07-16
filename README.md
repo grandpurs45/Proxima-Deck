@@ -5,11 +5,10 @@ ProximaDeck est un portail web open source auto-heberge pour homelab. Il sert de
 ## Fonctionnalites disponibles
 
 - Dashboard web responsive en une page.
-- Applications affichees sous forme de cartes.
-- Icones SVG par service avec fallback automatique.
-- Fallback d'icones par service, categorie, puis icone par defaut.
+- Applications affichees dans une grille de tuiles compactes.
+- Icones SVG par service avec monogramme automatique en fallback.
 - Host cible affiche sur chaque carte.
-- Categories repliables.
+- Filtres de categories avec compteurs.
 - Recherche instantanee.
 - Configuration par fichier YAML.
 - Visibilite par application : `internal`, `external`, `both`.
@@ -42,7 +41,6 @@ applications:
     visibility: both
     internal_url: http://ha.lan:8123
     external_url: https://ha.example.com
-    icon: default.svg
     order: 10
 ```
 
