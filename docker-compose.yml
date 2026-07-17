@@ -7,6 +7,8 @@ services:
       - "8080:80"
     environment:
       PROXIMADECK_CONFIG: /var/www/html/config/applications.yaml
+      PROXIMADECK_HEALTH_CACHE_TTL: "60"
+      PROXIMADECK_HEALTH_TIMEOUT_MS: "1500"
       # PROXIMADECK_NETWORK_CONTEXT: internal
       # PROXIMADECK_DIAGNOSTIC_MODE: "false"
     volumes:

@@ -4,6 +4,25 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.8.0] - 2026-07-17
+
+### Ajoute
+
+- Temoin lumineux `up`, `down` ou `unknown` sur chaque tuile.
+- Actualisation automatique des temoins toutes les 60 secondes.
+- Controle HTTP parallele cote serveur sur les seules applications visibles.
+- Cache de disponibilite configurable, avec une duree par defaut de 60 secondes.
+- Champ optionnel `healthcheck: false` pour desactiver le controle d un service.
+
+### Securite
+
+- Les redirections HTTP sont considerees comme disponibles sans etre suivies.
+- L API de disponibilite ne retourne ni code HTTP, ni erreur, ni URL technique.
+
+### Performance
+
+- Les tuiles s affichent avant le controle de disponibilite, qui est charge en arriere-plan.
+
 ## [0.7.0] - 2026-07-16
 
 ### Ajoute

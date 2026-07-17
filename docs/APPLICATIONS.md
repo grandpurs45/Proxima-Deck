@@ -13,6 +13,7 @@ applications:
     visibility: both
     internal_url: http://ha.lan:8123
     external_url: https://ha.example.com
+    healthcheck: true
     order: 10
 ```
 
@@ -28,6 +29,7 @@ applications:
 | `internal_url` | non | URL utilisee depuis le LAN. |
 | `external_url` | non | URL utilisee depuis Internet. |
 | `icon` | non | Nom d'un fichier SVG optionnel dans `public/assets/icons/`. Sans valeur, un monogramme est genere. |
+| `healthcheck` | non | Active le temoin de disponibilite. Defaut : `true`. Utilisez `false` pour afficher `unknown` sans sonder le service. |
 | `order` | non | Ordre d'affichage dans la categorie. Defaut : `100`. |
 
 ## Visibilite
@@ -84,6 +86,24 @@ Icones fournies dans le socle actuel :
 - `homeassistant.svg`
 - `vaultwarden.svg`
 
+## Disponibilite
+
+Le temoin reste volontairement simple :
+
+- vert : `up`, le service a repondu ;
+- rouge : `down`, le service ne repond pas, depasse le timeout ou retourne une erreur serveur ;
+- gris : `unknown`, le controle est desactive ou indisponible.
+
+Les redirections, pages protegees et reponses HTTP inferieures a 500 sont considerees comme `up`. ProximaDeck ne collecte ni historique, ni temps de reponse, ni detail d erreur.
+
+Le controle est realise en arriere-plan uniquement sur les applications visibles dans le contexte reseau courant. Les temoins sont actualises toutes les 60 secondes et les resultats sont mis en cache pendant 60 secondes par defaut.
+
+Pour desactiver le controle d une application :
+
+```yaml
+healthcheck: false
+```
+
 ## Inventaire homelab
 
 Pour remplacer les exemples par votre vraie configuration, ajoutez une entree par service avec au minimum :
@@ -112,3 +132,4 @@ La validation detecte notamment :
 - URL obligatoire manquante selon la visibilite ;
 - nom d'icone invalide ;
 - format du nom d'icone invalide.
+- valeur `healthcheck` invalide.

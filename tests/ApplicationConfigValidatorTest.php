@@ -53,3 +53,12 @@ $suite->test('icon paths are rejected', function () use ($suite, $validator, $va
     $suite->assertSame(true, $result->hasErrors());
     $suite->assertSame('invalid_icon_name', $result->toArray()[0]['code']);
 });
+
+$suite->test('invalid healthcheck value is rejected', function () use ($suite, $validator, $validApplication): void {
+    $application = $validApplication;
+    $application['healthcheck'] = 'sometimes';
+    $result = $validator->validate([$application]);
+
+    $suite->assertSame(true, $result->hasErrors());
+    $suite->assertSame('invalid_healthcheck', $result->toArray()[0]['code']);
+});

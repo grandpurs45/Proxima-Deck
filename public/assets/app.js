@@ -38,8 +38,31 @@ async function boot() {
     renderDiagnostic();
     renderWarnings(payload.validation?.warnings || []);
     render();
+    refreshHealth();
+    window.setInterval(refreshHealth, 60000);
   } catch (error) {
     renderError(error);
+  }
+}
+
+async function refreshHealth() {
+  try {
+    const response = await fetch(apiUrl('/api/health.php'), { headers: { Accept: 'application/json' } });
+
+    if (!response.ok) {
+      return;
+    }
+
+    const payload = await response.json();
+    const statuses = payload.statuses || {};
+
+    state.applications = state.applications.map((application) => ({
+      ...application,
+      health_status: statuses[application.id] || 'unknown',
+    }));
+    render();
+  } catch {
+    // Unknown remains the safe display state when health checks are unavailable.
   }
 }
 
@@ -70,9 +93,9 @@ function renderDiagnostic() {
   }
 }
 
-function apiUrl() {
+function apiUrl(path = '/api/apps.php') {
   const selected = diagnosticContext();
-  const url = new URL('/api/apps.php', window.location.origin);
+  const url = new URL(path, window.location.origin);
 
   if (selected !== 'auto') {
     url.searchParams.set('context', selected);
@@ -220,6 +243,7 @@ function renderCard(application) {
   const visibilityLabel = visibilityLabelFor(application.visibility);
   const host = hostLabel(application.resolved_url);
   const icon = renderIcon(application);
+  const health = healthPresentation(application.health_status);
 
   if (application.resolved_url) {
     card.href = application.resolved_url;
@@ -236,7 +260,10 @@ function renderCard(application) {
         <h2>${escapeHtml(application.name)}</h2>
         <p>${escapeHtml(application.category)} - ${escapeHtml(visibilityLabel)}</p>
       </div>
-      <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>
+      <div class="card-signals">
+        <span class="health-light health-${health.status}" role="img" aria-label="${health.label}" title="${health.label}"></span>
+        <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>
+      </div>
     </div>
     <p class="card-description">${escapeHtml(application.description || 'Aucune description')}</p>
     <div class="card-endpoint">
@@ -262,6 +289,14 @@ function renderIcon(application) {
       ${image}
     </span>
   `;
+}
+
+function healthPresentation(status) {
+  return {
+    up: { status: 'up', label: 'Service up' },
+    down: { status: 'down', label: 'Service down' },
+    unknown: { status: 'unknown', label: 'Etat inconnu' },
+  }[status] || { status: 'unknown', label: 'Etat inconnu' };
 }
 
 function targetLabelFor(target) {

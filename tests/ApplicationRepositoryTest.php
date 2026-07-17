@@ -21,11 +21,19 @@ applications:
     category: Monitoring
     visibility: both
     external_url: https://grafana.example.com
+  - id: manual-only
+    name: Manual only
+    category: Tools
+    visibility: internal
+    internal_url: http://manual.local
+    healthcheck: false
 YAML);
 
     try {
         $applications = (new ApplicationRepository($path))->all();
         $suite->assertSame('', $applications[0]['icon']);
+        $suite->assertSame(true, $applications[0]['healthcheck']);
+        $suite->assertSame(false, $applications[1]['healthcheck']);
     } finally {
         unlink($path);
     }

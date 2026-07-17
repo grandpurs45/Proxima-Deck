@@ -74,6 +74,10 @@ final class ApplicationConfigValidator
                 $issues[] = $this->error('missing_url', 'Une application both doit avoir au moins internal_url ou external_url.', $applicationRef, 'internal_url');
             }
 
+            if (array_key_exists('healthcheck', $application) && filter_var($application['healthcheck'], FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) === null) {
+                $issues[] = $this->error('invalid_healthcheck', 'Le champ healthcheck doit valoir true ou false.', $applicationRef, 'healthcheck');
+            }
+
             $icon = trim((string) ($application['icon'] ?? ''));
 
             if ($icon !== '') {

@@ -50,6 +50,7 @@ final class ApplicationRepository
             'internal_url' => $application['internal_url'] ?? null,
             'external_url' => $application['external_url'] ?? null,
             'visibility' => $visibility,
+            'healthcheck' => self::boolean($application['healthcheck'] ?? true),
             'order' => (int) ($application['order'] ?? 100),
         ];
     }
@@ -59,5 +60,10 @@ final class ApplicationRepository
         $slug = strtolower(trim(preg_replace('/[^a-zA-Z0-9]+/', '-', $value) ?? '', '-'));
 
         return $slug !== '' ? $slug : 'application';
+    }
+
+    private static function boolean(mixed $value): bool
+    {
+        return filter_var($value, FILTER_VALIDATE_BOOLEAN, FILTER_NULL_ON_FAILURE) ?? true;
     }
 }

@@ -6,6 +6,7 @@
 - Grille compacte d'applications.
 - Filtres de categories.
 - Monogrammes automatiques.
+- Temoins simples de disponibilite avec cache.
 - Recherche instantanee.
 - Configuration YAML.
 - URL interne/externe resolue automatiquement.

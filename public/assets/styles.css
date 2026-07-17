@@ -277,6 +277,7 @@ h1 {
   display: grid;
   min-width: 0;
   height: 148px;
+  overflow: hidden;
   grid-template-rows: auto 1fr auto;
   padding: 14px;
   border: 1px solid var(--line);
@@ -301,6 +302,39 @@ h1 {
   display: flex;
   align-items: center;
   gap: 10px;
+}
+
+.card-signals {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 8px;
+}
+
+.health-light {
+  width: 10px;
+  height: 10px;
+  flex: 0 0 10px;
+  border: 1px solid rgba(248, 250, 252, 0.28);
+  border-radius: 50%;
+  background: #64748b;
+}
+
+.health-up {
+  border-color: rgba(34, 197, 94, 0.8);
+  background: var(--green);
+  box-shadow: 0 0 0 4px rgba(34, 197, 94, 0.11);
+}
+
+.health-down {
+  border-color: rgba(251, 113, 133, 0.82);
+  background: var(--danger);
+  box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+}
+
+.health-unknown {
+  border-color: rgba(148, 163, 184, 0.46);
+  background: #64748b;
 }
 
 .icon-frame {

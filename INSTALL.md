@@ -2,7 +2,7 @@
 
 ## Prerequis
 
-- PHP 8.2 ou plus recent.
+- PHP 8.2 ou plus recent avec l extension cURL.
 - Apache avec `mod_rewrite` pour XAMPP ou image Docker fournie.
 - Docker et Docker Compose pour un deploiement conteneurise.
 
@@ -42,6 +42,8 @@ Le service expose l'application sur `http://localhost:8080`.
 | --- | --- | --- |
 | `PROXIMADECK_CONFIG` | Chemin du fichier YAML | `config/applications.yaml` |
 | `PROXIMADECK_NETWORK_CONTEXT` | Force `internal` ou `external` | detection automatique |
+| `PROXIMADECK_HEALTH_CACHE_TTL` | Duree du cache des temoins, en secondes | `60` |
+| `PROXIMADECK_HEALTH_TIMEOUT_MS` | Timeout maximal d un controle, en millisecondes | `1500` |
 
 ## Diagnostic reseau
 
