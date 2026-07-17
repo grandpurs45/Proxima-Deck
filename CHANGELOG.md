@@ -4,6 +4,13 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.8.1] - 2026-07-17
+
+### Corrige
+
+- Une reponse HTTP `501` a une requete `HEAD` est maintenant consideree comme `up`, notamment pour Proxmox.
+- Les fragments d URL commencant par `#` sont ignores par le controle et son cache.
+
 ## [0.8.0] - 2026-07-17
 
 ### Ajoute

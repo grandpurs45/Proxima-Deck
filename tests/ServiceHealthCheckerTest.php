@@ -38,10 +38,11 @@ $suite->test('health checker reuses its cache', function () use ($suite): void {
         return array_fill_keys($urls, 'up');
     };
     $checker = new ServiceHealthChecker($cacheDirectory, 60, 500, $probe(...));
-    $application = [['id' => 'cached', 'resolved_url' => 'https://cached.example.com', 'healthcheck' => true]];
+    $application = [['id' => 'cached', 'resolved_url' => 'https://cached.example.com/#first', 'healthcheck' => true]];
 
     try {
         $checker->withHealth($application);
+        $application[0]['resolved_url'] = 'https://cached.example.com/#another-view';
         $result = $checker->withHealth($application);
 
         $suite->assertSame(1, $calls);

@@ -14,6 +14,7 @@ require __DIR__ . '/ApplicationPresenterTest.php';
 require __DIR__ . '/ApplicationRepositoryTest.php';
 require __DIR__ . '/ApplicationConfigValidatorTest.php';
 require __DIR__ . '/IconResolverTest.php';
+require __DIR__ . '/HttpHealthClassifierTest.php';
 require __DIR__ . '/ServiceHealthCheckerTest.php';
 
 exit($suite->finish());

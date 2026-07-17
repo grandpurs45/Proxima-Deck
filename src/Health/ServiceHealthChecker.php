@@ -16,7 +16,8 @@ final class ServiceHealthChecker
         private readonly string $cacheDirectory,
         private readonly int $cacheTtlSeconds = 60,
         private readonly int $timeoutMs = 1500,
-        ?Closure $probe = null
+        ?Closure $probe = null,
+        private readonly HttpHealthClassifier $classifier = new HttpHealthClassifier()
     ) {
         $this->probe = $probe ?? Closure::fromCallable([$this, 'probeWithCurl']);
     }
@@ -29,20 +30,21 @@ final class ServiceHealthChecker
         foreach ($applications as $application) {
             $id = (string) ($application['id'] ?? '');
             $url = trim((string) ($application['resolved_url'] ?? ''));
+            $requestUrl = $this->requestUrl($url);
 
-            if (($application['healthcheck'] ?? true) !== true || !$this->supports($url)) {
+            if (($application['healthcheck'] ?? true) !== true || !$this->supports($requestUrl)) {
                 $statuses[$id] = 'unknown';
                 continue;
             }
 
-            $cached = $this->readCache($url);
+            $cached = $this->readCache($requestUrl);
 
             if ($cached !== null) {
                 $statuses[$id] = $cached;
                 continue;
             }
 
-            $pendingUrls[$url] = true;
+            $pendingUrls[$requestUrl] = true;
         }
 
         if ($pendingUrls !== []) {
@@ -53,7 +55,7 @@ final class ServiceHealthChecker
                 $this->writeCache((string) $url, $status);
 
                 foreach ($applications as $application) {
-                    if (($application['resolved_url'] ?? null) === $url) {
+                    if ($this->requestUrl((string) ($application['resolved_url'] ?? '')) === $url) {
                         $statuses[(string) ($application['id'] ?? '')] = $status;
                     }
                 }
@@ -111,9 +113,7 @@ final class ServiceHealthChecker
 
         foreach ($handles as $url => $handle) {
             $httpCode = (int) curl_getinfo($handle, CURLINFO_RESPONSE_CODE);
-            $statuses[$url] = curl_errno($handle) === 0 && $httpCode > 0 && $httpCode < 500
-                ? 'up'
-                : 'down';
+            $statuses[$url] = $this->classifier->classify(curl_errno($handle), $httpCode);
             curl_multi_remove_handle($multiHandle, $handle);
             curl_close($handle);
         }
@@ -128,6 +128,13 @@ final class ServiceHealthChecker
         $scheme = strtolower((string) parse_url($url, PHP_URL_SCHEME));
 
         return in_array($scheme, ['http', 'https'], true);
+    }
+
+    private function requestUrl(string $url): string
+    {
+        $fragmentPosition = strpos($url, '#');
+
+        return $fragmentPosition === false ? $url : substr($url, 0, $fragmentPosition);
     }
 
     private function readCache(string $url): ?string
