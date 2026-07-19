@@ -328,6 +328,10 @@ h1 {
   object-fit: contain;
 }
 
+.app-icon.has-image > span {
+  visibility: hidden;
+}
+
 .icon-tone-green {
   color: var(--green);
 }

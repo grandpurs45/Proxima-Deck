@@ -4,6 +4,13 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.4] - 2026-07-19
+
+### Corrige
+
+- Les initiales de fallback ne sont plus visibles derriere les zones transparentes d une icone chargee.
+- Le monogramme reapparait automatiquement uniquement lorsque le chargement de l icone echoue.
+
 ## [0.10.3] - 2026-07-19
 
 ### Corrige

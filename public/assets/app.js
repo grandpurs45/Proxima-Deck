@@ -258,11 +258,12 @@ function renderIcon(application) {
   const initials = escapeHtml(application.icon_initials || 'AP');
   const label = escapeHtml(application.icon_label || 'Icone de l application');
   const image = application.icon_url
-    ? `<img src="${escapeHtml(application.icon_url)}" alt="" loading="lazy" onerror="this.remove()">`
+    ? `<img src="${escapeHtml(application.icon_url)}" alt="" loading="lazy" onerror="this.parentElement.classList.remove('has-image'); this.remove()">`
     : '';
+  const imageClass = application.icon_url ? ' has-image' : '';
 
   return `
-    <span class="app-icon icon-tone-${tone}" title="${label}">
+    <span class="app-icon icon-tone-${tone}${imageClass}" title="${label}">
       <span aria-hidden="true">${initials}</span>
       ${image}
     </span>
