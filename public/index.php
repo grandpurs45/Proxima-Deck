@@ -49,8 +49,6 @@ $assetVersion = rawurlencode($version);
             </nav>
         </section>
 
-        <nav id="categoryFilters" class="category-filters" aria-label="Filtrer par categorie" hidden></nav>
-
         <section id="warningState" class="warning-state" hidden></section>
         <section id="dashboard" class="dashboard" aria-live="polite"></section>
         <section id="emptyState" class="empty-state" hidden>

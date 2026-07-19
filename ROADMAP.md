@@ -3,9 +3,7 @@
 ## V1
 
 - Dashboard une page.
-- Grille compacte d'applications.
-- Filtres de categories.
-- Monogrammes automatiques.
+- Mini-tuiles classees par categories.
 - Temoins simples de disponibilite avec cache.
 - Recherche instantanee.
 - Configuration YAML.

@@ -28,7 +28,7 @@ applications:
 | `visibility` | non | `internal`, `external` ou `both`. Defaut : `both`. |
 | `internal_url` | non | URL utilisee depuis le LAN. |
 | `external_url` | non | URL utilisee depuis Internet. |
-| `icon` | non | Nom d'un fichier SVG optionnel dans `public/assets/icons/`. Sans valeur, un monogramme est genere. |
+| `icon` | non | Ancien champ conserve pour compatibilite. Les mini-tuiles actuelles n affichent pas d icone. |
 | `healthcheck` | non | Active le temoin de disponibilite. Defaut : `true`. Utilisez `false` pour afficher `unknown` sans sonder le service. |
 | `order` | non | Ordre d'affichage dans la categorie. Defaut : `100`. |
 
@@ -50,41 +50,7 @@ Depuis Internet, une URL interne n'est jamais utilisee comme secours. Une applic
 
 ## Icones
 
-Le champ `icon` peut etre omis. ProximaDeck utilise une icone connue du service ou genere automatiquement un monogramme colore a partir du nom.
-
-Pour utiliser une icone personnalisee, placez le SVG dans `public/assets/icons/`, puis referencez seulement le nom du fichier :
-
-```yaml
-icon: homeassistant.svg
-```
-
-ProximaDeck resout les icones dans cet ordre :
-
-1. icone configuree dans `applications.yaml`, si le fichier existe ;
-2. icone connue du service, basee sur `id` ;
-3. monogramme automatique base sur le nom de l application.
-
-Les noms d'icones doivent etre des fichiers SVG simples, sans chemin :
-
-```yaml
-icon: umami.svg
-```
-
-Exemples refuses :
-
-```yaml
-icon: ../secret.svg
-icon: icon.png
-```
-
-Icones fournies dans le socle actuel :
-
-- `confluence.svg`
-- `proxmox.svg`
-- `umami.svg`
-- `uptime-kuma.svg`
-- `homeassistant.svg`
-- `vaultwarden.svg`
+Les mini-tuiles affichent uniquement le temoin de disponibilite et le nom de l application. Le champ `icon` peut etre omis. Il reste accepte pour ne pas casser les configurations existantes.
 
 ## Disponibilite
 
@@ -94,7 +60,7 @@ Le temoin reste volontairement simple :
 - rouge : `down`, le service ne repond pas, depasse le timeout ou retourne une erreur serveur ;
 - gris : `unknown`, le controle est desactive ou indisponible.
 
-Les redirections, pages protegees et reponses HTTP inferieures a 500 sont considerees comme `up`. ProximaDeck ne collecte ni historique, ni temps de reponse, ni detail d erreur.
+Les redirections, pages protegees, reponses HTTP inferieures a 500 et reponses `501` au controle `HEAD` sont considerees comme `up`. ProximaDeck ne collecte ni historique, ni temps de reponse, ni detail d erreur.
 
 Le controle est realise en arriere-plan uniquement sur les applications visibles dans le contexte reseau courant. Les temoins sont actualises toutes les 60 secondes et les resultats sont mis en cache pendant 60 secondes par defaut.
 

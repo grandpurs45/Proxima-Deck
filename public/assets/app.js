@@ -3,7 +3,6 @@ const state = {
   network: null,
   version: 'dev',
   query: '',
-  activeCategory: 'all',
 };
 
 const dashboard = document.querySelector('#dashboard');
@@ -15,7 +14,6 @@ const versionLabel = document.querySelector('#versionLabel');
 const appCount = document.querySelector('#appCount');
 const diagnosticLabel = document.querySelector('#diagnosticLabel');
 const diagnosticActions = document.querySelectorAll('[data-context]');
-const categoryFilters = document.querySelector('#categoryFilters');
 
 searchInput.addEventListener('input', (event) => {
   state.query = event.target.value.trim().toLowerCase();
@@ -120,14 +118,6 @@ function methodLabel(method) {
 }
 
 function render() {
-  const categories = categoryList(state.applications);
-
-  if (state.activeCategory !== 'all' && !categories.includes(state.activeCategory)) {
-    state.activeCategory = 'all';
-  }
-
-  renderCategoryFilters(categories);
-
   const filtered = state.applications.filter((application) => {
     const haystack = [
       application.name,
@@ -136,52 +126,16 @@ function render() {
       application.visibility,
     ].join(' ').toLowerCase();
 
-    const matchesQuery = haystack.includes(state.query);
-    const matchesCategory = state.activeCategory === 'all'
-      || application.category === state.activeCategory;
-
-    return matchesQuery && matchesCategory;
+    return haystack.includes(state.query);
   });
+  const categories = groupByCategory(filtered);
 
   appCount.textContent = String(filtered.length);
   emptyState.hidden = filtered.length > 0;
   dashboard.innerHTML = '';
 
-  for (const application of filtered) {
-    dashboard.appendChild(renderCard(application));
-  }
-}
-
-function renderCategoryFilters(categories) {
-  categoryFilters.hidden = categories.length < 2;
-  categoryFilters.innerHTML = '';
-
-  if (categories.length < 2) {
-    return;
-  }
-
-  const filters = ['all', ...categories];
-
-  for (const category of filters) {
-    const button = document.createElement('button');
-    const count = category === 'all'
-      ? state.applications.length
-      : state.applications.filter((application) => application.category === category).length;
-
-    button.type = 'button';
-    button.className = 'category-filter';
-    button.classList.toggle('is-active', category === state.activeCategory);
-    button.setAttribute('aria-pressed', String(category === state.activeCategory));
-    button.innerHTML = `
-      <span>${escapeHtml(category === 'all' ? 'Toutes' : category)}</span>
-      <small>${count}</small>
-    `;
-    button.addEventListener('click', () => {
-      state.activeCategory = category;
-      render();
-    });
-
-    categoryFilters.appendChild(button);
+  for (const [index, [category, applications]] of categories.entries()) {
+    dashboard.appendChild(renderCategory(category, applications, index));
   }
 }
 
@@ -231,64 +185,70 @@ function renderIssue(issue) {
   `;
 }
 
-function categoryList(applications) {
-  return [...new Set(applications.map((application) => application.category))]
-    .sort((left, right) => left.localeCompare(right));
+function groupByCategory(applications) {
+  const groups = new Map();
+
+  for (const application of applications) {
+    const category = application.category || 'Autres';
+
+    if (!groups.has(category)) {
+      groups.set(category, []);
+    }
+
+    groups.get(category).push(application);
+  }
+
+  return [...groups.entries()].sort(([left], [right]) => left.localeCompare(right));
+}
+
+function renderCategory(category, applications, index) {
+  const section = document.createElement('section');
+  const headingId = `category-${index}`;
+  section.className = 'category-section';
+  section.setAttribute('aria-labelledby', headingId);
+  section.innerHTML = `
+    <header class="category-heading">
+      <h2 id="${headingId}">${escapeHtml(category)}</h2>
+      <span>${applications.length}</span>
+    </header>
+  `;
+
+  const grid = document.createElement('div');
+  grid.className = 'category-grid';
+
+  for (const application of applications) {
+    grid.appendChild(renderCard(application));
+  }
+
+  section.appendChild(grid);
+
+  return section;
 }
 
 function renderCard(application) {
   const card = document.createElement(application.resolved_url ? 'a' : 'article');
-  card.className = `app-card visibility-${application.visibility}`;
-  const targetLabel = targetLabelFor(application.resolved_target);
-  const visibilityLabel = visibilityLabelFor(application.visibility);
+  card.className = 'app-card';
   const host = hostLabel(application.resolved_url);
-  const icon = renderIcon(application);
   const health = healthPresentation(application.health_status);
+  const description = application.description || host;
 
   if (application.resolved_url) {
     card.href = application.resolved_url;
     card.target = '_blank';
     card.rel = 'noreferrer';
+    card.title = `${application.name} - ${description}`;
   } else {
     card.classList.add('is-disabled');
+    card.title = 'URL manquante';
   }
 
   card.innerHTML = `
-    <div class="card-identity">
-      ${icon}
-      <div class="card-title">
-        <h2>${escapeHtml(application.name)}</h2>
-        <p>${escapeHtml(application.category)} - ${escapeHtml(visibilityLabel)}</p>
-      </div>
-      <div class="card-signals">
-        <span class="health-light health-${health.status}" role="img" aria-label="${health.label}" title="${health.label}"></span>
-        <span class="chip chip-${escapeHtml(application.resolved_target)}">${escapeHtml(targetLabel)}</span>
-      </div>
-    </div>
-    <p class="card-description">${escapeHtml(application.description || 'Aucune description')}</p>
-    <div class="card-endpoint">
-      <strong>${escapeHtml(host)}</strong>
-      <span${application.resolved_url ? ' aria-hidden="true"' : ''}>${application.resolved_url ? '&#8599;' : 'URL manquante'}</span>
-    </div>
+    <span class="health-light health-${health.status}" role="img" aria-label="${health.label}" title="${health.label}"></span>
+    <span class="app-name">${escapeHtml(application.name)}</span>
+    <span class="app-launch" aria-hidden="true">${application.resolved_url ? '&#8599;' : '!'}</span>
   `;
 
   return card;
-}
-
-function renderIcon(application) {
-  const allowedTones = ['cyan', 'green', 'amber', 'rose', 'blue'];
-  const tone = allowedTones.includes(application.icon_tone) ? application.icon_tone : 'cyan';
-  const initials = escapeHtml(application.icon_initials || 'AP');
-  const image = application.icon
-    ? `<img src="/assets/icons/${encodeURIComponent(application.icon)}" alt="" loading="lazy" onerror="this.remove()">`
-    : '';
-
-  return `
-    <span class="icon-frame icon-tone-${tone}" title="${escapeHtml(application.icon_label || 'Monogramme automatique')}">
-      <span class="icon-monogram" aria-hidden="true">${initials}</span>
-      ${image}
-    </span>
-  `;
 }
 
 function healthPresentation(status) {
@@ -297,22 +257,6 @@ function healthPresentation(status) {
     down: { status: 'down', label: 'Service down' },
     unknown: { status: 'unknown', label: 'Etat inconnu' },
   }[status] || { status: 'unknown', label: 'Etat inconnu' };
-}
-
-function targetLabelFor(target) {
-  return {
-    internal: 'LAN',
-    external: 'WEB',
-    fallback: 'Fallback',
-  }[target] || 'N/A';
-}
-
-function visibilityLabelFor(visibility) {
-  return {
-    internal: 'LAN uniquement',
-    external: 'Web uniquement',
-    both: 'LAN + Web',
-  }[visibility] || visibility;
 }
 
 function hostLabel(url) {

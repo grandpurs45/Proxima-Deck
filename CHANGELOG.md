@@ -4,6 +4,15 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.9.0] - 2026-07-19
+
+### Ameliore
+
+- Organisation visuelle permanente des applications par categorie.
+- Mini-tuiles de 44 pixels contenant uniquement le temoin, le nom et l action d ouverture.
+- La recherche conserve le regroupement et masque automatiquement les categories vides.
+- Suppression des icones, descriptions, hosts et badges de contexte dans les tuiles compactes.
+
 ## [0.8.1] - 2026-07-17
 
 ### Corrige
