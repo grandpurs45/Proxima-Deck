@@ -4,6 +4,13 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.5] - 2026-07-19
+
+### Ameliore
+
+- Le temoin rouge d un service `down` clignote pour attirer l attention.
+- L animation respecte le reglage systeme de reduction des mouvements.
+
 ## [0.10.4] - 2026-07-19
 
 ### Corrige

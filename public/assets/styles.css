@@ -299,11 +299,31 @@ h1 {
   border-color: rgba(251, 113, 133, 0.82);
   background: var(--danger);
   box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.1);
+  animation: health-alert 1.2s ease-in-out infinite;
 }
 
 .health-unknown {
   border-color: rgba(148, 163, 184, 0.46);
   background: #64748b;
+}
+
+@keyframes health-alert {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 0 4px rgba(251, 113, 133, 0.12);
+  }
+
+  50% {
+    opacity: 0.35;
+    box-shadow: 0 0 0 1px rgba(251, 113, 133, 0.04);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .health-down {
+    animation: none;
+  }
 }
 
 .app-icon {
