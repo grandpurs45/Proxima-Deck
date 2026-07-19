@@ -24,6 +24,14 @@ $suite->test('known service icon is resolved automatically', function () use ($s
     $suite->assertSame('service', $result['icon_source']);
 });
 
+$suite->test('extensionless icon explicitly selects Dashboard Icons', function () use ($suite, $resolver): void {
+    $result = $resolver->resolve(['id' => 'uptime-kuma', 'name' => 'Uptime Kuma', 'category' => 'Monitoring', 'icon' => 'uptime-kuma']);
+
+    $suite->assertSame('uptime-kuma.webp', $result['icon']);
+    $suite->assertSame('dashboard', $result['icon_source']);
+    $suite->assertSame('/api/icon.php?name=uptime-kuma', $result['icon_url']);
+});
+
 $suite->test('missing local icon uses Dashboard Icons through the local API', function () use ($suite, $resolver): void {
     $result = $resolver->resolve(['id' => 'grafana', 'name' => 'Grafana', 'category' => 'Monitoring', 'icon' => 'grafana.svg']);
 

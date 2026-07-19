@@ -26,12 +26,10 @@ final class IconResolver
         $configuredIcon = $this->safeIconReference((string) ($application['icon'] ?? ''));
 
         if ($configuredIcon !== null) {
-            $localIcon = $this->localFilename($configuredIcon);
-
-            if ($this->exists($localIcon)) {
+            if ($this->hasExtension($configuredIcon) && $this->exists($configuredIcon)) {
                 return $this->result(
-                    $localIcon,
-                    '/assets/icons/' . rawurlencode($localIcon),
+                    $configuredIcon,
+                    '/assets/icons/' . rawurlencode($configuredIcon),
                     'configured',
                     'Icone locale',
                     $application
@@ -79,9 +77,9 @@ final class IconResolver
         return $icon;
     }
 
-    private function localFilename(string $icon): string
+    private function hasExtension(string $icon): bool
     {
-        return pathinfo($icon, PATHINFO_EXTENSION) !== '' ? $icon : $icon . '.svg';
+        return pathinfo($icon, PATHINFO_EXTENSION) !== '';
     }
 
     private function dashboardName(string $icon): string

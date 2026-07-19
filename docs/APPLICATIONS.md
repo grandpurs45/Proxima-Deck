@@ -57,11 +57,15 @@ ProximaDeck utilise le meme principe que Homepage. Indiquez le nom disponible su
 icon: proxmox
 ```
 
+Un nom sans extension selectionne toujours Dashboard Icons, meme si un SVG local porte le meme nom.
+
 Les extensions compatibles avec Homepage sont egalement acceptees :
 
 ```yaml
 icon: uptime-kuma.svg
 ```
+
+Avec une extension, ProximaDeck utilise en priorite le fichier local correspondant. S il n existe pas, Dashboard Icons est utilise en secours.
 
 La resolution respecte cet ordre :
 

@@ -4,6 +4,13 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.3] - 2026-07-19
+
+### Corrige
+
+- Un nom d icone sans extension selectionne maintenant Dashboard Icons au lieu d un fichier SVG local homonyme.
+- Le choix entre une icone distante et une icone locale est desormais explicite dans la configuration.
+
 ## [0.10.2] - 2026-07-19
 
 ### Ameliore
