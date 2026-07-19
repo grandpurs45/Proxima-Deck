@@ -244,11 +244,29 @@ function renderCard(application) {
 
   card.innerHTML = `
     <span class="health-light health-${health.status}" role="img" aria-label="${health.label}" title="${health.label}"></span>
+    ${renderIcon(application)}
     <span class="app-name">${escapeHtml(application.name)}</span>
     <span class="app-launch" aria-hidden="true">${application.resolved_url ? '&#8599;' : '!'}</span>
   `;
 
   return card;
+}
+
+function renderIcon(application) {
+  const allowedTones = ['cyan', 'green', 'amber', 'rose', 'blue'];
+  const tone = allowedTones.includes(application.icon_tone) ? application.icon_tone : 'cyan';
+  const initials = escapeHtml(application.icon_initials || 'AP');
+  const label = escapeHtml(application.icon_label || 'Icone de l application');
+  const image = application.icon_url
+    ? `<img src="${escapeHtml(application.icon_url)}" alt="" loading="lazy" onerror="this.remove()">`
+    : '';
+
+  return `
+    <span class="app-icon icon-tone-${tone}" title="${label}">
+      <span aria-hidden="true">${initials}</span>
+      ${image}
+    </span>
+  `;
 }
 
 function healthPresentation(status) {

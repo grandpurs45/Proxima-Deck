@@ -3,7 +3,7 @@
 ## V1
 
 - Dashboard une page.
-- Mini-tuiles classees par categories.
+- Mini-tuiles classees par categories avec Dashboard Icons.
 - Temoins simples de disponibilite avec cache.
 - Recherche instantanee.
 - Configuration YAML.

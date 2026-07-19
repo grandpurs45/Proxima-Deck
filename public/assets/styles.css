@@ -260,7 +260,7 @@ h1 {
   min-width: 0;
   height: 44px;
   align-items: center;
-  gap: 10px;
+  gap: 9px;
   overflow: hidden;
   padding: 0 12px;
   border: 1px solid var(--line);
@@ -304,6 +304,44 @@ h1 {
 .health-unknown {
   border-color: rgba(148, 163, 184, 0.46);
   background: #64748b;
+}
+
+.app-icon {
+  position: relative;
+  display: grid;
+  width: 28px;
+  height: 28px;
+  flex: 0 0 28px;
+  place-items: center;
+  overflow: hidden;
+  border-radius: 5px;
+  color: var(--cyan);
+  background: rgba(2, 6, 23, 0.62);
+  font-size: 0.64rem;
+  font-weight: 900;
+}
+
+.app-icon img {
+  position: absolute;
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+}
+
+.icon-tone-green {
+  color: var(--green);
+}
+
+.icon-tone-amber {
+  color: var(--warn);
+}
+
+.icon-tone-rose {
+  color: var(--danger);
+}
+
+.icon-tone-blue {
+  color: var(--blue);
 }
 
 .app-name {

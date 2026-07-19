@@ -14,6 +14,7 @@ $suite->test('configured icon has priority', function () use ($suite, $resolver)
 
     $suite->assertSame('umami.svg', $result['icon']);
     $suite->assertSame('configured', $result['icon_source']);
+    $suite->assertSame('/assets/icons/umami.svg', $result['icon_url']);
 });
 
 $suite->test('known service icon is resolved automatically', function () use ($suite, $resolver): void {
@@ -23,10 +24,19 @@ $suite->test('known service icon is resolved automatically', function () use ($s
     $suite->assertSame('service', $result['icon_source']);
 });
 
+$suite->test('missing local icon uses Dashboard Icons through the local API', function () use ($suite, $resolver): void {
+    $result = $resolver->resolve(['id' => 'grafana', 'name' => 'Grafana', 'category' => 'Monitoring', 'icon' => 'grafana.svg']);
+
+    $suite->assertSame('grafana.webp', $result['icon']);
+    $suite->assertSame('dashboard', $result['icon_source']);
+    $suite->assertSame('/api/icon.php?name=grafana', $result['icon_url']);
+});
+
 $suite->test('unknown service gets an automatic monogram', function () use ($suite, $resolver): void {
     $result = $resolver->resolve(['id' => 'grafana-cloud', 'name' => 'Grafana Cloud', 'category' => 'Monitoring', 'icon' => '']);
 
     $suite->assertSame('', $result['icon']);
+    $suite->assertSame('', $result['icon_url']);
     $suite->assertSame('monogram', $result['icon_source']);
     $suite->assertSame('GC', $result['icon_initials']);
     $suite->assertTrue(in_array($result['icon_tone'], ['cyan', 'green', 'amber', 'rose', 'blue'], true));

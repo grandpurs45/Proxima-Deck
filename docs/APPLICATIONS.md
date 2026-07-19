@@ -13,6 +13,7 @@ applications:
     visibility: both
     internal_url: http://ha.lan:8123
     external_url: https://ha.example.com
+    icon: home-assistant
     healthcheck: true
     order: 10
 ```
@@ -28,7 +29,7 @@ applications:
 | `visibility` | non | `internal`, `external` ou `both`. Defaut : `both`. |
 | `internal_url` | non | URL utilisee depuis le LAN. |
 | `external_url` | non | URL utilisee depuis Internet. |
-| `icon` | non | Ancien champ conserve pour compatibilite. Les mini-tuiles actuelles n affichent pas d icone. |
+| `icon` | non | Nom Dashboard Icons ou nom d un fichier local. Extensions `.svg`, `.png` et `.webp` acceptees. |
 | `healthcheck` | non | Active le temoin de disponibilite. Defaut : `true`. Utilisez `false` pour afficher `unknown` sans sonder le service. |
 | `order` | non | Ordre d'affichage dans la categorie. Defaut : `100`. |
 
@@ -50,7 +51,33 @@ Depuis Internet, une URL interne n'est jamais utilisee comme secours. Une applic
 
 ## Icones
 
-Les mini-tuiles affichent uniquement le temoin de disponibilite et le nom de l application. Le champ `icon` peut etre omis. Il reste accepte pour ne pas casser les configurations existantes.
+ProximaDeck utilise le meme principe que Homepage. Indiquez le nom disponible sur [dashboardicons.com](https://dashboardicons.com/) :
+
+```yaml
+icon: proxmox
+```
+
+Les extensions compatibles avec Homepage sont egalement acceptees :
+
+```yaml
+icon: uptime-kuma.svg
+```
+
+La resolution respecte cet ordre :
+
+1. fichier local existant dans `public/assets/icons/` ;
+2. Dashboard Icons via l API locale `/api/icon.php` ;
+3. monogramme automatique si l icone est absente ou indisponible.
+
+Les icones Dashboard Icons sont recuperees par le serveur puis conservees 30 jours dans le repertoire temporaire. Le navigateur ne contacte pas directement le CDN. Les noms sont strictement valides et ne peuvent pas contenir de chemin ou d URL.
+
+Parametres optionnels :
+
+```env
+PROXIMADECK_ICON_CACHE=/chemin/vers/le/cache
+PROXIMADECK_ICON_CACHE_TTL=2592000
+PROXIMADECK_ICON_TIMEOUT_MS=3000
+```
 
 ## Disponibilite
 

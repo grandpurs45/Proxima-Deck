@@ -81,8 +81,8 @@ final class ApplicationConfigValidator
             $icon = trim((string) ($application['icon'] ?? ''));
 
             if ($icon !== '') {
-                if ($icon !== basename($icon) || preg_match('/^[a-zA-Z0-9._-]+\.svg$/', $icon) !== 1) {
-                    $issues[] = $this->error('invalid_icon_name', 'Le champ icon doit etre un nom de fichier SVG sans chemin.', $applicationRef, 'icon');
+                if ($icon !== basename($icon) || preg_match('/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\.(?:svg|png|webp))?$/i', $icon) !== 1) {
+                    $issues[] = $this->error('invalid_icon_name', 'Le champ icon doit etre un nom Dashboard Icons ou un fichier local sans chemin.', $applicationRef, 'icon');
                 }
             }
         }

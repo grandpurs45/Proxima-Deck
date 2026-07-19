@@ -45,6 +45,16 @@ $suite->test('missing icon file is accepted for automatic fallback', function ()
     $suite->assertSame([], $result->toArray());
 });
 
+$suite->test('Dashboard Icons names and supported extensions are accepted', function () use ($suite, $validator, $validApplication): void {
+    foreach (['grafana', 'uptime-kuma.png', 'proxmox.webp'] as $icon) {
+        $application = $validApplication;
+        $application['icon'] = $icon;
+        $result = $validator->validate([$application]);
+
+        $suite->assertSame(false, $result->hasErrors());
+    }
+});
+
 $suite->test('icon paths are rejected', function () use ($suite, $validator, $validApplication): void {
     $application = $validApplication;
     $application['icon'] = '../private.svg';

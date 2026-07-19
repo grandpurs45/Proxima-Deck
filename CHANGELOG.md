@@ -4,6 +4,20 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.0] - 2026-07-19
+
+### Ajoute
+
+- Icones Dashboard Icons avec la meme syntaxe simple que Homepage.
+- Cache serveur des icones distantes pour eviter un appel CDN depuis le navigateur.
+- Cache temporaire des icones inexistantes pour conserver un fallback rapide.
+- Fallback automatique vers un monogramme lorsqu une icone est indisponible.
+
+### Ameliore
+
+- Petite icone de service de 28 pixels dans les mini-tuiles, sans agrandir leur hauteur.
+- Priorite conservee pour les fichiers d icones locaux existants.
+
 ## [0.9.0] - 2026-07-19
 
 ### Ameliore

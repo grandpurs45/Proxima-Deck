@@ -23,22 +23,48 @@ final class IconResolver
 
     public function resolve(array $application): array
     {
-        $configuredIcon = $this->safeIconName((string) ($application['icon'] ?? ''));
+        $configuredIcon = $this->safeIconReference((string) ($application['icon'] ?? ''));
 
-        if ($configuredIcon !== null && $this->exists($configuredIcon)) {
-            return $this->result($configuredIcon, 'configured', 'Icone configuree', $application);
+        if ($configuredIcon !== null) {
+            $localIcon = $this->localFilename($configuredIcon);
+
+            if ($this->exists($localIcon)) {
+                return $this->result(
+                    $localIcon,
+                    '/assets/icons/' . rawurlencode($localIcon),
+                    'configured',
+                    'Icone locale',
+                    $application
+                );
+            }
+
+            $dashboardName = $this->dashboardName($configuredIcon);
+
+            return $this->result(
+                $dashboardName . '.webp',
+                '/api/icon.php?name=' . rawurlencode($dashboardName),
+                'dashboard',
+                'Dashboard Icons',
+                $application
+            );
         }
 
         $serviceIcon = self::SERVICE_ICONS[$this->slug((string) ($application['id'] ?? ''))] ?? null;
 
         if ($serviceIcon !== null && $this->exists($serviceIcon)) {
-            return $this->result($serviceIcon, 'service', 'Icone service', $application);
+            return $this->result(
+                $serviceIcon,
+                '/assets/icons/' . rawurlencode($serviceIcon),
+                'service',
+                'Icone service',
+                $application
+            );
         }
 
-        return $this->result('', 'monogram', 'Monogramme automatique', $application);
+        return $this->result('', '', 'monogram', 'Monogramme automatique', $application);
     }
 
-    private function safeIconName(string $icon): ?string
+    private function safeIconReference(string $icon): ?string
     {
         $icon = trim($icon);
 
@@ -46,11 +72,21 @@ final class IconResolver
             return null;
         }
 
-        if (preg_match('/^[a-zA-Z0-9._-]+\.svg$/', $icon) !== 1) {
+        if (preg_match('/^[a-zA-Z0-9][a-zA-Z0-9._-]*(?:\.(?:svg|png|webp))?$/i', $icon) !== 1) {
             return null;
         }
 
         return $icon;
+    }
+
+    private function localFilename(string $icon): string
+    {
+        return pathinfo($icon, PATHINFO_EXTENSION) !== '' ? $icon : $icon . '.svg';
+    }
+
+    private function dashboardName(string $icon): string
+    {
+        return strtolower((string) pathinfo($icon, PATHINFO_FILENAME));
     }
 
     private function exists(string $icon): bool
@@ -58,13 +94,20 @@ final class IconResolver
         return is_file($this->iconDirectory . DIRECTORY_SEPARATOR . $icon);
     }
 
-    private function result(string $icon, string $source, string $label, array $application): array
+    private function result(
+        string $icon,
+        string $iconUrl,
+        string $source,
+        string $label,
+        array $application
+    ): array
     {
         $identity = trim((string) ($application['name'] ?? $application['id'] ?? 'Application'));
         $toneIdentity = trim((string) ($application['id'] ?? $identity));
 
         return [
             'icon' => $icon,
+            'icon_url' => $iconUrl,
             'icon_source' => $source,
             'icon_label' => $label,
             'icon_initials' => $this->initials($identity),
