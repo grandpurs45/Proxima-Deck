@@ -4,6 +4,12 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.2] - 2026-07-19
+
+### Ameliore
+
+- Titres et compteurs de categories agrandis pour mieux structurer le dashboard.
+
 ## [0.10.1] - 2026-07-19
 
 ### Ameliore

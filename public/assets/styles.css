@@ -229,7 +229,7 @@ h1 {
 
 .category-heading {
   display: flex;
-  min-height: 24px;
+  min-height: 28px;
   align-items: center;
   gap: 8px;
   border-bottom: 1px solid var(--line);
@@ -238,13 +238,13 @@ h1 {
 .category-heading h2 {
   margin: 0;
   color: var(--text);
-  font-size: 0.84rem;
+  font-size: 1rem;
   font-weight: 800;
 }
 
 .category-heading span {
   color: var(--cyan);
-  font-size: 0.7rem;
+  font-size: 0.76rem;
   font-weight: 800;
 }
 
