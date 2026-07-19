@@ -4,6 +4,14 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.1] - 2026-07-19
+
+### Ameliore
+
+- Tuiles agrandies a 56 pixels pour une lecture plus confortable.
+- Icones de 34 pixels, noms plus lisibles et largeur minimale mieux equilibree.
+- Grille mobile conservee en deux colonnes lorsque l espace le permet.
+
 ## [0.10.0] - 2026-07-19
 
 ### Ajoute
