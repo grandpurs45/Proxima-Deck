@@ -4,6 +4,13 @@ Toutes les evolutions notables de ProximaDeck seront documentees ici.
 
 Le projet suit le versioning semantique.
 
+## [0.10.6] - 2026-07-24
+
+### Ameliore
+
+- Bandeaux de categories plus visibles avec fond contraste et repere cyan lateral.
+- Compteurs de categories mieux detaches et espacement renforce entre les groupes.
+
 ## [0.10.5] - 2026-07-19
 
 ### Ameliore
